@@ -16,18 +16,14 @@ public class Showing {
 	public int getId() {
 		return id;
 	}
+
+	public Date getShowtime() {
+		return showtime;
+	}
 	
 	public String getShowingInfo() {
 		//TODO
 		return "";
 	}
 	
-	public boolean canCancelTicket(Date cancellationDate) {
-		boolean retVal = false;
-		
-		if ((showtime.getTime() - cancellationDate.getTime()) / 3600000.0 <= 72.0)
-			retVal = true;
-		
-		return retVal;
-	}
 }

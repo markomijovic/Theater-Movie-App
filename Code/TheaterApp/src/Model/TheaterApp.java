@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class TheaterApp {
 	double ANNUAL_FEE = 20.0;
 	double ADMINISTRATION_FEE = 0.15;
+	double MIN_CANCEL_NOTICE_HOURS = 72.0;
 	
 	private ArrayList<Theater> myTheaters;
 	private ArrayList<Movie> myMovies;
@@ -114,6 +115,15 @@ public class TheaterApp {
 		
 		Voucher voucher = new Voucher(new Date(), amount);
 		return voucher;
+	}
+
+	private boolean canCancelTicket(Date showtime, Date cancellationDate) {
+		boolean retVal = false;
+		
+		if ((showtime.getTime() - cancellationDate.getTime()) / 3600000.0 <= 72.0)
+			retVal = true;
+		
+		return retVal;
 	}
 	
 	public ArrayList<String> getTheaters(){
@@ -259,7 +269,7 @@ public class TheaterApp {
 				Showing myShowing = searchShowing(myTicket.getTheaterId(), 
 												  myTicket.getMovieId(), 
 												  myTicket.getShowingId());
-				if (myShowing.canCancelTicket(new Date())) {
+				if (canCancelTicket(myShowing.getShowtime(), new Date())) {
 					myTicket.returnTicket();
 					issueVoucher(currentUser, myTicket);
 					myMessageSystem.sendTicketRefundConfirmationEmail(currentUser, myTicket);					
