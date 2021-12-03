@@ -20,7 +20,7 @@ public class ModelController {
 		while (pageId >= 0) {
 			switch (pageId) {
 			case 0: 
-				result = myUI.interactWithUser();
+				result = myUI.interactWithUser(null);
 				pageId = Integer.parseInt(result[0]);
 				myUI.switchPage(pageId);
 				break;

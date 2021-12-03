@@ -7,8 +7,8 @@ public class TheaterUI {
 		activePage = new HomePage();
 	}
 	
-	public String[] interactWithUser() {
-		return activePage.interactWithUser();
+	public String[] interactWithUser(String[] modelInput) {
+		return activePage.interactWithUser(modelInput);
 	}
 	
 	public void switchPage(int pageId) {
