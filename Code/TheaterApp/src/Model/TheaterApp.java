@@ -18,7 +18,7 @@ public class TheaterApp {
 	
 	private User currentUser;
 	
-	TheaterApp(){
+	public TheaterApp() {
 		myTheaters = DBLoader.loadTheaters();
 		myMovies = DBLoader.loadMovies();
 		myActiveTickets = DBLoader.loadActiveTickets();

@@ -1,5 +1,6 @@
 package View;
 
-public class Page {
+public abstract class Page {
 
+	public abstract String[] interactWithUser();
 }
