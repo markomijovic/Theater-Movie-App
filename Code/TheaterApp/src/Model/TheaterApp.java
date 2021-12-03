@@ -126,17 +126,17 @@ public class TheaterApp {
 		return retVal;
 	}
 	
-	public ArrayList<String> getTheaters(){
+	public String[] getTheaters(){
 		ArrayList<String> retVal = new ArrayList<String>();
 		
 		int numTheaters = myTheaters.size();
 		for (int i = 0; i < numTheaters; i++)
 			retVal.add(myTheaters.get(i).getTheaterInfo());
 		
-		return retVal;
+		return (String[]) retVal.toArray();
 	}
 	
-	public ArrayList<String> getMovies(int theaterId){
+	public String[] getMovies(int theaterId){
 		ArrayList<String> retVal = new ArrayList<String>();
 		
 		Theater myTheater = searchTheater(theaterId);
@@ -147,10 +147,10 @@ public class TheaterApp {
 				retVal.add(myTheater.getMyMovies().get(i).getMovieInfo());
 		}
 		
-		return retVal;
+		return (String[]) retVal.toArray();
 	}
 
-	public ArrayList<String> getShowings(int theaterId, int movieId) {
+	public String[] getShowings(int theaterId, int movieId) {
 		ArrayList<String> retVal = new ArrayList<String>();
 		
 		Theater myTheater = searchTheater(theaterId);
@@ -165,10 +165,10 @@ public class TheaterApp {
 			}
 		}
 		
-		return retVal;
+		return (String[]) retVal.toArray();
 	}
 	
-	public ArrayList<String> getSeats(int theaterId, int movieId, int showingId) {
+	public String[] getSeats(int theaterId, int movieId, int showingId) {
 		ArrayList<String> retVal = new ArrayList<String>();
 		
 		Showing myShowing = searchShowing(theaterId, movieId, showingId);
@@ -180,7 +180,7 @@ public class TheaterApp {
 			}
 		}
 		
-		return retVal;
+		return (String[]) retVal.toArray();
 	}
 	
 	public String[] login(String username, String password) {
@@ -196,12 +196,12 @@ public class TheaterApp {
 		return new String[] {Boolean.toString(retVal)};
 	}
 
-	public boolean logout() {
+	public String[] logout() {
 		currentUser = new OrdinaryUser();
-		return true;
+		return new String[] {Boolean.toString(true)};
 	}
 	
-	public boolean enterPaymentInfo(String email,
+	public String[] enterPaymentInfo(String email,
 								 String nameOnCard,
 								 int creditCardNumber,
 								 int ccv,
@@ -220,10 +220,10 @@ public class TheaterApp {
 		if (retVal)
 			currentUser.setPaymentInfo(myPaymentInfo);
 		
-		return retVal;
+		return new String[] {Boolean.toString(retVal)};
 	}
 	
-	public boolean register(String username, String password, String name, String address) {
+	public String[] register(String username, String password, String name, String address) {
 		boolean retVal = false;
 
 		PaymentInfo myPaymentInfo = currentUser.getPaymentInfo();
@@ -237,11 +237,11 @@ public class TheaterApp {
 				retVal = true;
 			}				
 		}
-		
-		return retVal;
+
+		return new String[] {Boolean.toString(retVal)};
 	}
 	
-	public boolean buyTicket(int ticketId) {
+	public String[] buyTicket(int ticketId) {
 		boolean retVal = false;
 		
 		Ticket myTicket = searchActiveTicket(ticketId);
@@ -255,11 +255,11 @@ public class TheaterApp {
 				myMessageSystem.sendTicketPurchaseConfirmationEmail(currentUser, myTicket);
 			}
 		}
-		
-		return retVal;
+
+		return new String[] {Boolean.toString(retVal)};
 	}
 	
-	public boolean cancelTicket(int ticketId) {
+	public String[] cancelTicket(int ticketId) {
 		boolean retVal = false;
 		
 		Ticket myTicket = searchActiveTicket(ticketId);
@@ -276,7 +276,7 @@ public class TheaterApp {
 				}
 			}
 		}
-		
-		return retVal;
+
+		return new String[] {Boolean.toString(retVal)};
 	}
 }
