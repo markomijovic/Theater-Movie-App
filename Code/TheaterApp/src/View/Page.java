@@ -2,5 +2,7 @@ package View;
 
 public abstract class Page {
 
-	public abstract String[] interactWithUser(String[] modelInput);
+	public abstract String[] interactWithUser();
+	public void sendMessage(String message) {}
+	public void loadModelInfo(String[] modelInput) {}
 }

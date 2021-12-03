@@ -15,14 +15,29 @@ public class ModelController {
 
 	public void run() {
 		int pageId = 0;
-		String[] result;
+		String[] modelInput = null;
+		String[] modelOutput = null;
 		
 		while (pageId >= 0) {
+			myUI.switchPage(pageId);
+			
 			switch (pageId) {
 			case 0: 
-				result = myUI.interactWithUser(null);
-				pageId = Integer.parseInt(result[0]);
-				myUI.switchPage(pageId);
+				modelInput = myUI.interactWithUser();
+				pageId = Integer.parseInt(modelInput[0]);
+				break;
+			case 1:
+				boolean done = false;
+				while (!done) {
+					modelInput = myUI.interactWithUser();
+					if (Boolean.getBoolean(modelInput[0])) {
+						modelOutput = myModel.login(modelInput[1], modelInput[2]);
+						myUI.sendMessage(modelOutput[0]);
+					}
+					else
+						done = true;
+				}
+				pageId = 0;
 				break;
 			default:
 				pageId = -1;

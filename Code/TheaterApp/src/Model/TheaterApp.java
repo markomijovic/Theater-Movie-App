@@ -183,7 +183,7 @@ public class TheaterApp {
 		return retVal;
 	}
 	
-	public boolean login(String username, String password) {
+	public String[] login(String username, String password) {
 		boolean retVal = false;
 		
 		User search = myUserSystem.login(username, password);
@@ -193,7 +193,7 @@ public class TheaterApp {
 			retVal = true;
 		}
 		
-		return retVal;
+		return new String[] {Boolean.toString(retVal)};
 	}
 
 	public boolean logout() {
