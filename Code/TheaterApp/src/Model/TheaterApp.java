@@ -102,6 +102,12 @@ public class TheaterApp {
 		return retVal;
 	}
 
+	/** 
+	 * Searches a for a voucher based on its id.
+	 * 
+	 * PROMISES: Returns voucher with specified id.
+	 * REQUIRES: Valid voucher id.
+	 */
 	private Voucher searchActiveVoucher(int voucherId) {
 		Voucher retVal = null;
 		
@@ -116,6 +122,11 @@ public class TheaterApp {
 		return retVal;
 	}
 
+	/**
+	 * Issues a voucher for a ticket to the current user.
+	 * PROMISES: A voucher creation for a specific user.
+	 * REQUIRES: User to give voucher to and ticket to be refunded.
+	 */
 	private Voucher issueVoucher(User currentUser, Ticket myTicket) {
 		double amount = myTicket.getCost();
 		
@@ -126,6 +137,12 @@ public class TheaterApp {
 		return voucher;
 	}
 
+	/**
+	 * Checks whether a ticket can be cancelled. Cancellation must happen no later
+	 * than 72 hours before the movie.
+	 * PROMISES: Returns true if ticket can be cancelled
+	 * REQUIRES: Showtime for movie and the cancellation date.
+	 */
 	private boolean canCancelTicket(Date showtime, Date cancellationDate) {
 		boolean retVal = false;
 		
@@ -135,6 +152,9 @@ public class TheaterApp {
 		return retVal;
 	}
 	
+	/**
+	 * Get a list of theaters and their information.
+	 */
 	public String[] getTheaters(){
 		ArrayList<String> retVal = new ArrayList<String>();
 		
@@ -145,6 +165,9 @@ public class TheaterApp {
 		return (String[]) retVal.toArray();
 	}
 	
+	/**
+	 * Get a list of movies for a specific theater location.
+	 */
 	public String[] getMovies(String theaterId){
 		ArrayList<String> retVal = new ArrayList<String>();
 		
@@ -161,6 +184,9 @@ public class TheaterApp {
 		return (String[]) retVal.toArray();
 	}
 
+	/** 
+	 * Get a list of showings for a specific movie at a specific theater.
+	 */
 	public String[] getShowings(String theaterId, String movieId) {
 		ArrayList<String> retVal = new ArrayList<String>();
 		
@@ -179,6 +205,9 @@ public class TheaterApp {
 		return (String[]) retVal.toArray();
 	}
 	
+	/**
+	 * Get list of seats for a specific showing.
+	 */
 	public String[] getSeats(String theaterId, String movieId, String showingId) {
 		ArrayList<String> retVal = new ArrayList<String>();
 		
@@ -198,6 +227,11 @@ public class TheaterApp {
 		return (String[]) retVal.toArray();
 	}
 	
+	/**
+	 * Log in using a username and password. Login is validated using login system.
+	 * If successful, current user is changed to the registered user. Otherwise,
+	 * current user remains ordinary user.
+	 */
 	public String[] login(String username, String password) {
 		boolean retVal = false;
 		
@@ -211,11 +245,17 @@ public class TheaterApp {
 		return new String[] {Boolean.toString(retVal)};
 	}
 
+	/**
+	 * Changes the current user to an ordinary user.
+	 */
 	public String[] logout() {
 		currentUser = new OrdinaryUser();
 		return new String[] {Boolean.toString(true)};
 	}
 	
+	/**
+	 * Attempts to enter the payment information for the current user.
+	 */
 	public String[] enterPaymentInfo(String email,
 								 String nameOnCard,
 								 int creditCardNumber,
@@ -238,6 +278,10 @@ public class TheaterApp {
 		return new String[] {Boolean.toString(retVal)};
 	}
 	
+	/**
+	 * Registers the current user as a registered user.
+	 * Annual fee is charged.
+	 */
 	public String[] register(String username, String password, String name, String address) {
 		boolean retVal = false;
 
@@ -256,6 +300,9 @@ public class TheaterApp {
 		return new String[] {Boolean.toString(retVal)};
 	}
 	
+	/**
+	 * Buys ticket at a specific theater, for a specific movie, at a specific showing, at a specific seat.
+	 */
 	public String[] buyTicket(String theaterId, String movieId, String showingId, String ticketId) {
 		boolean retVal = false;
 
@@ -278,7 +325,10 @@ public class TheaterApp {
 
 		return new String[] {Boolean.toString(retVal)};
 	}
-	
+
+	/**
+	 * Cancels ticket at a specific theater, for a specific movie, at a specific showing, at a specific seat.
+	 */
 	public String[] cancelTicket(String theaterId, String movieId, String showingId, String ticketId) {
 		boolean retVal = false;
 

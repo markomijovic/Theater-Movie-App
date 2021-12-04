@@ -36,7 +36,7 @@ public class Theater {
 	 * Searches a for a specific showing.
 	 * 
 	 * PROMISES: Returns showing with specified id at specific theater for a specific movie.
-	 * REQUIRES: Valid theater, movie, and showing id.
+	 * REQUIRES: Valid movie and showing id.
 	 */
 	public Showing searchShowing(Movie myMovie, String showingId) {
 		Showing retVal = null;

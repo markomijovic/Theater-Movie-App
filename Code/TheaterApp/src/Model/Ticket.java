@@ -1,8 +1,17 @@
 package Model;
 
+/**
+ * Represents a ticket.
+ */
 public class Ticket {
 
+	/**
+	 * The status of the ticket, whether it is sold (true) or not sold (false)
+	 */
 	private boolean sold;
+	/**
+	 * Id for ticket is row and column, example A2.
+	 */
 	private String id;
 	private double cost;
 
