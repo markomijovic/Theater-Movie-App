@@ -1,13 +1,37 @@
 package Model;
 
+/**
+ * A class representing all required information for successful payment.
+ */
 public class PaymentInfo {
+	/**
+	 * E-mail to be notified of purchases.
+	 */
 	private String email;
+	/**
+	 * Name on card.
+	 */
 	private String nameOnCard;
+	/**
+	 * Card number
+	 */
 	private int creditCardNumber;
+	/**
+	 * Security code on back of card
+	 */
 	private int ccv;
+	/**
+	 * Month of expiry date for card.
+	 */
 	private int expiryMonth;
+	/**
+	 * Year of expiry date for card.
+	 */
 	private int expiryYear;
 	
+	/**
+	 * Default constructor with default values.
+	 */
 	PaymentInfo() {
 		this.email = "";
 		this.nameOnCard = "";
@@ -17,6 +41,15 @@ public class PaymentInfo {
 		this.expiryYear = -1;		
 	}
 	
+	/**
+	 * Constructor for a valid payment information object.
+	 * @param email
+	 * @param nameOnCard
+	 * @param creditCardNumber
+	 * @param ccv
+	 * @param expiryMonth
+	 * @param expiryYear
+	 */
 	PaymentInfo( String email,
 				 String nameOnCard,
 				 int creditCardNumber,
@@ -31,6 +64,9 @@ public class PaymentInfo {
 		this.expiryYear = expiryYear;
 	}
 	
+	/**
+	 * Returns email information
+	 */
 	public String getEmail() {
 		return email;
 	}

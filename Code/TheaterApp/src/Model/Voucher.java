@@ -19,4 +19,8 @@ public class Voucher {
 	public double getRefundValue() {
 		return refundValue;
 	}
+	public String getInformation() {
+		//TODO
+		return "";
+	}
 }

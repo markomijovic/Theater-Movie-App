@@ -4,7 +4,7 @@ public class Ticket {
 
 	private boolean sold;
 	private int theaterId;
-	private int movieId;
+	private String movieId;
 	private int showingId;
 	private int id;
 	private double cost;
@@ -23,7 +23,7 @@ public class Ticket {
 		return theaterId;
 	}
 
-	public int getMovieId() {
+	public String getMovieId() {
 		return movieId;
 	}
 

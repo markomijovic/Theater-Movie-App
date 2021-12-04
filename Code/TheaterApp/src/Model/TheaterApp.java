@@ -43,12 +43,12 @@ public class TheaterApp {
 		return retVal;
 	}
 
-	private Movie searchMovie(int movieId) {
+	private Movie searchMovie(String movieId) {
 		Movie retVal = null;
 		
 		int numMovies = myMovies.size();
 		for (int i = 0; i < numMovies; i++) {
-			if (myMovies.get(i).getId() == movieId) {
+			if (myMovies.get(i).getTitle().equals(movieId)) {
 				retVal = myMovies.get(i);
 				break;
 			}
@@ -57,7 +57,7 @@ public class TheaterApp {
 		return retVal;
 	}
 
-	private Showing searchShowing(int theaterId, int movieId, int showingId) {
+	private Showing searchShowing(int theaterId, String movieId, int showingId) {
 		Showing retVal = null;
 
 		Theater myTheater = searchTheater(theaterId);
@@ -150,7 +150,7 @@ public class TheaterApp {
 		return (String[]) retVal.toArray();
 	}
 
-	public String[] getShowings(int theaterId, int movieId) {
+	public String[] getShowings(int theaterId, String movieId) {
 		ArrayList<String> retVal = new ArrayList<String>();
 		
 		Theater myTheater = searchTheater(theaterId);
@@ -168,7 +168,7 @@ public class TheaterApp {
 		return (String[]) retVal.toArray();
 	}
 	
-	public String[] getSeats(int theaterId, int movieId, int showingId) {
+	public String[] getSeats(int theaterId, String movieId, int showingId) {
 		ArrayList<String> retVal = new ArrayList<String>();
 		
 		Showing myShowing = searchShowing(theaterId, movieId, showingId);
@@ -271,8 +271,8 @@ public class TheaterApp {
 												  myTicket.getShowingId());
 				if (canCancelTicket(myShowing.getShowtime(), new Date())) {
 					myTicket.returnTicket();
-					issueVoucher(currentUser, myTicket);
-					myMessageSystem.sendTicketRefundConfirmationEmail(currentUser, myTicket);					
+					Voucher myVoucher = issueVoucher(currentUser, myTicket);
+					myMessageSystem.sendTicketRefundConfirmationEmail(currentUser, myTicket, myVoucher);					
 				}
 			}
 		}

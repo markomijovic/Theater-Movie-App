@@ -40,7 +40,8 @@ public class MessageSystem {
 		boolean isRegisteredUser = myUser instanceof RegisteredUser;
 		String message = "Ticket with id " + Integer.toString(myTicket.getId()) +
 						 " was refunded for $ " + Double.toString(myVoucher.getRefundValue()) +
-						 "\nTicket information: \n" + myTicket.getSeatInfo();
+						 "\nTicket information: \n" + myTicket.getSeatInfo() +
+						 "\nVoucher information: \n" + myVoucher.getInformation();
 
 		if (isRegisteredUser)
 			message += "Note that a 15% Administration fee was applied to refund";
