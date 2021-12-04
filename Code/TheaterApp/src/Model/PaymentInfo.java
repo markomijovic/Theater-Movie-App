@@ -30,4 +30,8 @@ public class PaymentInfo {
 		this.expiryMonth = expiryMonth;
 		this.expiryYear = expiryYear;
 	}
+	
+	public String getEmail() {
+		return email;
+	}
 }
