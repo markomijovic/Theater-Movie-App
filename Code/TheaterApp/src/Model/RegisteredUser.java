@@ -22,4 +22,8 @@ public class RegisteredUser extends User{
 	public String getUsername() {
 		return username;
 	}
+	
+	public String getName() {
+		return name;
+	}
 }

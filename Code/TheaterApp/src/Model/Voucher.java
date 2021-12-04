@@ -5,15 +5,18 @@ import java.util.Date;
 public class Voucher {
 
 	private Date issueDate;
-	private double amount;
+	private double refundValue;
 	private int id;
 	
-	Voucher(Date issueDate, double amount) {
+	Voucher(Date issueDate, double refundValue) {
 		this.issueDate = issueDate;
-		this.amount = amount;
+		this.refundValue = refundValue;
 	}
 	
 	public int getId() {
 		return id;
+	}
+	public double getRefundValue() {
+		return refundValue;
 	}
 }
