@@ -15,15 +15,43 @@ public class TheaterApp {
     static int UNIQUE_ID = 0;
     int uid = ++UNIQUE_ID;
 	
+    /**
+     * This is a list of all theater locations.
+     */
 	private ArrayList<Theater> myTheaters;
+	/**
+	 * This is a list of all movies.
+	 */
 	private ArrayList<Movie> myMovies;
+	/**
+	 * This is a list of all vouchers that are not expired.
+	 */
 	private ArrayList<Voucher> myActiveVouchers;
+	/**
+	 * This is the system that deals with registered user login/registration.
+	 */
 	private UserSystem myUserSystem;
+	/**
+	 * System to send email messages.
+	 */
 	private MessageSystem myMessageSystem;
+	/**
+	 * System to charge payment.
+	 */
 	private PaymentSystem myPaymentSystem;
-	
+	/**
+	 * User currently using the app, by default this is an ordinary user.
+	 */
 	private User currentUser;
 	
+	/**
+	 * Default constructor for the app is a Factory method.
+	 * An ordinary user is instantiated by default. 
+	 * Login/Registration system is instantiated.
+	 * Message system is instantiated.
+	 * Payment system is instantiated.
+	 * Theater and Movie information is loaded from the database.
+	 */
 	public TheaterApp() {
 		currentUser = new OrdinaryUser();
 		myMessageSystem = new MessageSystem();
@@ -34,6 +62,12 @@ public class TheaterApp {
 		myTheaters = DBLoader.loadTheaters(myMovies);
 	}
 	
+	/** 
+	 * Searches a for a theater based on its id.
+	 * 
+	 * PROMISES: Returns theater with specified id.
+	 * REQUIRES: Valid theater id.
+	 */
 	private Theater searchTheater(String theaterId) {
 		Theater retVal = null;
 		
@@ -47,7 +81,13 @@ public class TheaterApp {
 		
 		return retVal;
 	}
-
+	
+	/** 
+	 * Searches a for a movie based on its id.
+	 * 
+	 * PROMISES: Returns movie with specified id.
+	 * REQUIRES: Valid movie id.
+	 */
 	private Movie searchMovie(String movieId) {
 		Movie retVal = null;
 		
@@ -55,43 +95,6 @@ public class TheaterApp {
 		for (int i = 0; i < numMovies; i++) {
 			if (myMovies.get(i).getTitle().equals(movieId)) {
 				retVal = myMovies.get(i);
-				break;
-			}
-		}
-		
-		return retVal;
-	}
-
-	private Showing searchShowing(String theaterId, String movieId, String showingId) {
-		Showing retVal = null;
-
-		Theater myTheater = searchTheater(theaterId);
-		Movie myMovie = searchMovie(movieId);
-		
-		if (myTheater != null && myMovie != null) {
-			ArrayList<Showing> myShowings = myTheater.getShowings(myMovie);
-			if (myShowings != null) {
-				int numShowings = myShowings.size();
-				for (int i = 0; i < numShowings; i++) {
-					if (myShowings.get(i).getId().equals(showingId)) {
-						retVal = myShowings.get(i);
-						break;
-					}
-				}
-			}
-		}
-		
-		return retVal;
-	}
-
-	private Ticket searchActiveTicket(Showing myShowing, String ticketId) {
-		Ticket retVal = null;
-		
-		ArrayList<Ticket> myActiveTickets = myShowing.getMyTickets();
-		int numTickets = myActiveTickets.size();
-		for (int i = 0; i < numTickets; i++) {
-			if (myActiveTickets.get(i).getId().equals(ticketId)) {
-				retVal = myActiveTickets.get(i);
 				break;
 			}
 		}
@@ -179,12 +182,16 @@ public class TheaterApp {
 	public String[] getSeats(String theaterId, String movieId, String showingId) {
 		ArrayList<String> retVal = new ArrayList<String>();
 		
-		Showing myShowing = searchShowing(theaterId, movieId, showingId);
-		if (myShowing != null) {
-			ArrayList<Ticket> myTickets = myShowing.getMyTickets();
-			int numSeats = myTickets.size();
-			for (int i = 0; i < numSeats; i++) {
-				retVal.add(myTickets.get(i).getSeatInfo());
+		Theater myTheater = searchTheater(theaterId);
+		Movie myMovie = searchMovie(movieId);
+		if (myTheater != null && myMovie != null) {
+			Showing myShowing = myTheater.searchShowing(myMovie, showingId);
+			if (myShowing != null) {
+				ArrayList<Ticket> myTickets = myShowing.getMyTickets();
+				int numSeats = myTickets.size();
+				for (int i = 0; i < numSeats; i++) {
+					retVal.add(myTickets.get(i).getSeatInfo());
+				}
 			}
 		}
 		
@@ -251,17 +258,21 @@ public class TheaterApp {
 	
 	public String[] buyTicket(String theaterId, String movieId, String showingId, String ticketId) {
 		boolean retVal = false;
-		
-		Showing myShowing = searchShowing(theaterId, movieId, showingId);
-		Ticket myTicket = searchActiveTicket(myShowing, ticketId);
-		
-		if (myTicket != null) {
-			if (!myTicket.isSold())
-				retVal = myPaymentSystem.charge(currentUser.getPaymentInfo(), myTicket.getCost());
+
+		Theater myTheater = searchTheater(theaterId);
+		Movie myMovie = searchMovie(movieId);
+		if (myTheater != null && myMovie != null) {
+			Showing myShowing = myTheater.searchShowing(myMovie, showingId);
+			Ticket myTicket = myShowing.searchTicket(ticketId);
 			
-			if (retVal) {
-				myTicket.buyTicket();
-				myMessageSystem.sendTicketPurchaseConfirmationEmail(currentUser, myTicket);
+			if (myTicket != null) {
+				if (!myTicket.isSold())
+					retVal = myPaymentSystem.charge(currentUser.getPaymentInfo(), myTicket.getCost());
+				
+				if (retVal) {
+					myTicket.buyTicket();
+					myMessageSystem.sendTicketPurchaseConfirmationEmail(currentUser, myTicket);
+				}
 			}
 		}
 
@@ -271,19 +282,23 @@ public class TheaterApp {
 	public String[] cancelTicket(String theaterId, String movieId, String showingId, String ticketId) {
 		boolean retVal = false;
 
-		Showing myShowing = searchShowing(theaterId, movieId, showingId);
-		Ticket myTicket = searchActiveTicket(myShowing, ticketId);
-		
-		if (myTicket != null) {
-			if (myTicket.isSold()) {
-				if (canCancelTicket(myShowing.getShowtime(), new Date())) {
-					myTicket.returnTicket();
-					Voucher myVoucher = issueVoucher(currentUser, myTicket);
-					myMessageSystem.sendTicketRefundConfirmationEmail(currentUser, myTicket, myVoucher);					
+		Theater myTheater = searchTheater(theaterId);
+		Movie myMovie = searchMovie(movieId);
+		if (myTheater != null && myMovie != null) {
+			Showing myShowing = myTheater.searchShowing(myMovie, showingId);
+			Ticket myTicket = myShowing.searchTicket(ticketId);
+			
+			if (myTicket != null) {
+				if (myTicket.isSold()) {
+					if (canCancelTicket(myShowing.getShowtime(), new Date())) {
+						myTicket.returnTicket();
+						Voucher myVoucher = issueVoucher(currentUser, myTicket);
+						myMessageSystem.sendTicketRefundConfirmationEmail(currentUser, myTicket, myVoucher);					
+					}
 				}
 			}
 		}
-
+		
 		return new String[] {Boolean.toString(retVal)};
 	}
 }

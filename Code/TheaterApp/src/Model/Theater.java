@@ -31,7 +31,30 @@ public class Theater {
 	public ArrayList<Showing> getShowings(Movie movie) {
 		return mySchedule.get(movie);
 	}
-	
+
+	/** 
+	 * Searches a for a specific showing.
+	 * 
+	 * PROMISES: Returns showing with specified id at specific theater for a specific movie.
+	 * REQUIRES: Valid theater, movie, and showing id.
+	 */
+	public Showing searchShowing(Movie myMovie, String showingId) {
+		Showing retVal = null;
+
+		ArrayList<Showing> myShowings = getShowings(myMovie);
+		if (myShowings != null) {
+			int numShowings = myShowings.size();
+			for (int i = 0; i < numShowings; i++) {
+				if (myShowings.get(i).getId().equals(showingId)) {
+					retVal = myShowings.get(i);
+					break;
+				}
+			}
+		}
+		
+		return retVal;
+	}
+
 	/**
 	 * Returns all theater information.
 	 */

@@ -20,7 +20,27 @@ public class Showing {
 	Showing (){
 		
 	}
-	
+
+	/** 
+	 * Searches a for a ticket.
+	 * 
+	 * PROMISES: Returns ticket with specified id at the showing.
+	 * REQUIRES: Valid showing and ticket id.
+	 */
+	public Ticket searchTicket(String ticketId) {
+		Ticket retVal = null;
+		
+		int numTickets = myTickets.size();
+		for (int i = 0; i < numTickets; i++) {
+			if (myTickets.get(i).getId().equals(ticketId)) {
+				retVal = myTickets.get(i);
+				break;
+			}
+		}
+		
+		return retVal;
+	}
+
 	public ArrayList<Ticket> getMyTickets() {
 		return myTickets;
 	}
