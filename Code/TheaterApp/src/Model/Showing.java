@@ -8,17 +8,26 @@ import java.util.Date;
  * as well as the time for the movie.
  */
 public class Showing {
-	
+	/**
+	 * Room number + time.
+	 */
 	private String id;
-	private int numRows;
-	private int numCols;
-	private String theaterId;
-	private String movieId;
+	/**
+	 * List of all tickets for this showing.
+	 */
 	private ArrayList<Ticket> myTickets;
+	/**
+	 * Time for showing.
+	 */
 	private Date showtime;
 	
-	Showing (){
-		
+	/**
+	 * Constructor for Showing inititalizes all data members.
+	 */
+	Showing (String id, ArrayList<Ticket> myTickets, Date showtime){
+		this.id = id;
+		this.myTickets = myTickets;
+		this.showtime = showtime;
 	}
 
 	/** 
@@ -41,21 +50,32 @@ public class Showing {
 		return retVal;
 	}
 
+	/**
+	 * Returns list of tickets for this showing.
+	 */
 	public ArrayList<Ticket> getMyTickets() {
 		return myTickets;
 	}
 	
+	/**
+	 * Returns id for showing.
+	 */
 	public String getId() {
 		return id;
 	}
 
+	/**
+	 * Returns time for showing.
+	 */
 	public Date getShowtime() {
 		return showtime;
 	}
 	
+	/**
+	 * Returns room number and time.
+	 */
 	public String getShowingInfo() {
-		//TODO
-		return "";
+		return id + "\nTime: " + showtime.toString();
 	}
 	
 }
