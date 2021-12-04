@@ -43,12 +43,6 @@ public class PaymentInfo {
 	
 	/**
 	 * Constructor for a valid payment information object.
-	 * @param email
-	 * @param nameOnCard
-	 * @param creditCardNumber
-	 * @param ccv
-	 * @param expiryMonth
-	 * @param expiryYear
 	 */
 	PaymentInfo( String email,
 				 String nameOnCard,

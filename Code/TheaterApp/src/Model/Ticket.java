@@ -67,6 +67,9 @@ public class Ticket {
 	 * Gets the seat information.
 	 */
 	public String getSeatInfo() {
-		return id;
+		String status = "available";
+		if (sold)
+			status = "unavailable";
+		return id + "(" + status + ")";
 	}
 }
