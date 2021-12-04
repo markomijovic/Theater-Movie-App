@@ -1,6 +1,7 @@
 package Model;
 
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.ArrayList;
 
 public class TheaterApp {
@@ -31,12 +32,12 @@ public class TheaterApp {
 		currentUser = new OrdinaryUser();
 	}
 	
-	private Theater searchTheater(int theaterId) {
+	private Theater searchTheater(String theaterId) {
 		Theater retVal = null;
 		
 		int numTheaters = myTheaters.size();
 		for (int i = 0; i < numTheaters; i++) {
-			if (myTheaters.get(i).getId() == theaterId) {
+			if (myTheaters.get(i).getPostalCode().equals(theaterId)) {
 				retVal = myTheaters.get(i);
 				break;
 			}
@@ -59,7 +60,7 @@ public class TheaterApp {
 		return retVal;
 	}
 
-	private Showing searchShowing(int theaterId, String movieId, int showingId) {
+	private Showing searchShowing(String theaterId, String movieId, int showingId) {
 		Showing retVal = null;
 
 		Theater myTheater = searchTheater(theaterId);
@@ -138,21 +139,23 @@ public class TheaterApp {
 		return (String[]) retVal.toArray();
 	}
 	
-	public String[] getMovies(int theaterId){
+	public String[] getMovies(String theaterId){
 		ArrayList<String> retVal = new ArrayList<String>();
 		
 		Theater myTheater = searchTheater(theaterId);
 		
 		if (myTheater != null) {
-			int numMovies = myTheater.getMyMovies().size();
-			for (int i = 0; i < numMovies; i++)
-				retVal.add(myTheater.getMyMovies().get(i).getMovieInfo());
+			Enumeration<Movie> myMovies = myTheater.getMySchedule().keys();
+			while(myMovies.hasMoreElements()) {
+	            Movie m = myMovies.nextElement();
+				retVal.add(m.getMovieInfo());
+	        }
 		}
 		
 		return (String[]) retVal.toArray();
 	}
 
-	public String[] getShowings(int theaterId, String movieId) {
+	public String[] getShowings(String theaterId, String movieId) {
 		ArrayList<String> retVal = new ArrayList<String>();
 		
 		Theater myTheater = searchTheater(theaterId);
@@ -170,7 +173,7 @@ public class TheaterApp {
 		return (String[]) retVal.toArray();
 	}
 	
-	public String[] getSeats(int theaterId, String movieId, int showingId) {
+	public String[] getSeats(String theaterId, String movieId, int showingId) {
 		ArrayList<String> retVal = new ArrayList<String>();
 		
 		Showing myShowing = searchShowing(theaterId, movieId, showingId);

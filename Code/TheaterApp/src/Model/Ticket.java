@@ -3,7 +3,7 @@ package Model;
 public class Ticket {
 
 	private boolean sold;
-	private int theaterId;
+	private String theaterId;
 	private String movieId;
 	private int showingId;
 	private int id;
@@ -19,7 +19,7 @@ public class Ticket {
 		return id;
 	}
 
-	public int getTheaterId() {
+	public String getTheaterId() {
 		return theaterId;
 	}
 
