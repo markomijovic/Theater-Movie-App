@@ -10,7 +10,7 @@ VALUES	("Crowfoot Way", "Calgary","AB","T3F9L0"),
         
         
 INSERT INTO movie 
-VALUES	('No Time To Die', "Chinook Cineplex","Member get free popcorn"), 
+VALUES	("No Time To Die", "Chinook Cineplex","Member get free popcorn"), 
 		("Dune", "Crowfoot Cineplex","Follow on IG for discount"), 
         ("Matrix", "CrossIron Cineplex",null), 
         ("Eternals", "Landmark Country Hills","Movie Giveaway!");     
@@ -20,42 +20,36 @@ VALUES	('No Time To Die', "Chinook Cineplex","Member get free popcorn"),
         
 -- Populating showtime table         
 INSERT INTO showtime 
-VALUES	("2021", "December", 6, "Monday", "9:00"),
-		("2021", "December", 6,"Monday", "9:00"),
-        ("2021", "December", 6,"Monday", "9:00"),
-        ("2021", "December", 6,"Monday", "9:00"),
-        ("2021", "December", 6,"Monday", "9:00"),
+VALUES	("2021", "December", 6, "Monday", "17:00"),
+		("2021", "December", 6,"Monday", "18:00"),
+        ("2021", "December", 6,"Monday", "19:00"),
+        ("2021", "December", 6,"Monday", "20:00"),
+        ("2021", "December", 6,"Monday", "21:00"),
+        ("2021", "December", 7,"Tuesday", "17:00"),
+        ("2021", "December", 7,"Tuesday", "18:00"),
+        ("2021", "December", 7,"Tuesday", "19:00"),
         ("2021", "December", 7,"Tuesday", "20:00"),
-        ("2021", "December", 7,"Tuesday", "20:00"),
-        ("2021", "December", 7,"Tuesday", "20:00"),
-        ("2021", "December", 7,"Tuesday", "20:00"),
-		("2021", "December", 7,"Tuesday", "20:00"),
-		("2021", "December", 11,"Saturday", "21:30"),
-		("2021", "December", 11,"Saturday", "21:30"),
-        ("2021", "December", 11,"Saturday", "21:30"),
-        ("2021", "December", 11,"Saturday", "21:30"),
-		("2021", "December", 11,"Saturday", "21:30");
+		("2021", "December", 7,"Tuesday", "21:00"),
+		("2021", "December", 11,"Saturday", "17:00"),
+		("2021", "December", 11,"Saturday", "18:00"),
+        ("2021", "December", 11,"Saturday", "19:00"),
+        ("2021", "December", 11,"Saturday", "20:00"),
+		("2021", "December", 11,"Saturday", "21:00");
        
-INSERT INTO ticket 
-VALUES	('No Time To Die', "Chinook Cineplex","Member get free popcorn"), 
-		("Dune", "Crowfoot Cineplex","Follow on IG for discount"), 
-        ("Matrix", "CrossIron Cineplex",null), 
-        ("Eternals", "Landmark Country Hills","Movie Giveaway!");     
-
 
 
 -- Populating ticket table
 INSERT INTO ticket 
-VALUES	(1,"True", "A", 1, 12.50),
-		(2,"True", "A", 2, 12.50),
-        (3,"True", "A", 3, 12.50),
-        (4,"True", "A", 4, 12.50),
-        (5,"True", "A", 5, 12.50),
-        (6,"True", "B", 1, 12.50),
-        (7,"True", "B", 2, 12.50),
-        (8,"True", "B", 3, 12.50),
-        (9,"True", "B", 4, 12.50),
-        (10,"True", "B", 5, 12.50);
+VALUES	(1,True, "A", 1, 12.50),
+		(2,True, "A", 2, 12.50),
+        (3,True, "A", 3, 12.50),
+        (4,True, "A", 4, 12.50),
+        (5,True, "A", 5, 12.50),
+        (6,True, "B", 1, 12.50),
+        (7,True, "B", 2, 12.50),
+        (8,True, "B", 3, 12.50),
+        (9,True, "B", 4, 12.50),
+        (10,True, "B", 5, 12.50);
 	  
 
 -- Populating regUser table
