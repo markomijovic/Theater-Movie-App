@@ -87,4 +87,11 @@ public class UserSystem {
 		
 		return retVal;
 	}
+	
+	/**
+	 * Returns list of all registered users.
+	 */
+	public ArrayList<RegisteredUser> getMyUsers() {
+		return myUsers;
+	}
 }

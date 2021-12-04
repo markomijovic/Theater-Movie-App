@@ -351,4 +351,12 @@ public class TheaterApp {
 		
 		return new String[] {Boolean.toString(retVal)};
 	}
+	
+	/**
+	 * Sends exclusive movie news to all registered users.
+	 */
+	public void sendExclusiveMovieNews(String news) {
+		myMessageSystem.sendExclusiveMovieNewsEmail(myUserSystem.getMyUsers(), news);
+
+	}
 }

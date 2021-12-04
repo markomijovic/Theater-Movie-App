@@ -21,15 +21,20 @@ public class Movie {
 	 * Main actor name
 	 */
 	private String leadingActor;
+	/**
+	 * The theater app observs movie for any news to send to customers.
+	 */
+	private TheaterApp myObserver;
 	
 	/**
 	 * Constructor for movie.
 	 */
-	Movie(String title, String movieNews, String synopsis, String leadingActor) {
+	Movie(String title, String movieNews, String synopsis, String leadingActor, TheaterApp myObserver) {
 		this.title = title;
 		this.synopsis = synopsis;
 		this.leadingActor = leadingActor;
 		setMovieNews(movieNews);
+		this.myObserver = myObserver;
 	}
 	
 	/** 
@@ -53,8 +58,8 @@ public class Movie {
 	 * get this movie news.
 	 */
 	public void setMovieNews(String news) {
-		//TODO: Implement observer pattern. 
-		//      When news are updated, all registered users are notified.
+		// Observer Pattern: When news are updated, all registered users are notified.
 		movieNews = news;
+		myObserver.sendExclusiveMovieNews(news);
 	}
 }
