@@ -7,6 +7,8 @@ public class TheaterApp {
 	double ANNUAL_FEE = 20.0;
 	double ADMINISTRATION_FEE = 0.15;
 	double MIN_CANCEL_NOTICE_HOURS = 72.0;
+    static int UNIQUE_ID = 0;
+    int uid = ++UNIQUE_ID;
 	
 	private ArrayList<Theater> myTheaters;
 	private ArrayList<Movie> myMovies;
@@ -113,7 +115,7 @@ public class TheaterApp {
 		if (!(currentUser instanceof RegisteredUser))
 			amount *= (1.0 - ADMINISTRATION_FEE);
 		
-		Voucher voucher = new Voucher(new Date(), amount);
+		Voucher voucher = new Voucher(new Date(), amount, uid);
 		return voucher;
 	}
 
