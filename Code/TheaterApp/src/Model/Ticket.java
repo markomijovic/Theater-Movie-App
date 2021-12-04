@@ -6,16 +6,16 @@ public class Ticket {
 	private String theaterId;
 	private String movieId;
 	private int showingId;
-	private int id;
+	private String id;
 	private double cost;
 
-	Ticket (int id, double cost) {
+	Ticket (String id, double cost) {
 		this.id = id;
 		this.cost = cost;
 		this.sold = false;
 	}
 	
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 

@@ -25,7 +25,7 @@ public class MessageSystem {
 	 *  REQUIRES: Purchased ticket and buyer
 	 */
 	public void sendTicketPurchaseConfirmationEmail(User myUser, Ticket myTicket) {
-		String message = "Ticket with id " + Integer.toString(myTicket.getId()) +
+		String message = "Ticket " + myTicket.getId() +
 						 " was purchased for $ " + Double.toString(myTicket.getCost()) +
 						 "\nTicket information: \n" + myTicket.getSeatInfo();
 		sendEmail(myUser.getPaymentInfo().getEmail(), message);
@@ -38,7 +38,7 @@ public class MessageSystem {
 	 */
 	public void sendTicketRefundConfirmationEmail(User myUser, Ticket myTicket, Voucher myVoucher) {
 		boolean isRegisteredUser = myUser instanceof RegisteredUser;
-		String message = "Ticket with id " + Integer.toString(myTicket.getId()) +
+		String message = "Ticket " + myTicket.getId() +
 						 " was refunded for $ " + Double.toString(myVoucher.getRefundValue()) +
 						 "\nTicket information: \n" + myTicket.getSeatInfo() +
 						 "\nVoucher information: \n" + myVoucher.getInformation();

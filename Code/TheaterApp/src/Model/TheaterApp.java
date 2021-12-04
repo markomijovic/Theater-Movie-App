@@ -4,6 +4,10 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.ArrayList;
 
+/**
+ * This is the main class for the backend. It runs all operations.
+
+ */
 public class TheaterApp {
 	double ANNUAL_FEE = 20.0;
 	double ADMINISTRATION_FEE = 0.15;
@@ -22,14 +26,14 @@ public class TheaterApp {
 	private User currentUser;
 	
 	public TheaterApp() {
-		myTheaters = DBLoader.loadTheaters();
-		myMovies = DBLoader.loadMovies();
-		myActiveTickets = DBLoader.loadActiveTickets();
-		myActiveVouchers = DBLoader.loadActiveVouchers();
-		myUserSystem = UserSystem.getInstance();
+		currentUser = new OrdinaryUser();
 		myMessageSystem = new MessageSystem();
 		myPaymentSystem = new PaymentSystem();
-		currentUser = new OrdinaryUser();
+		myUserSystem = UserSystem.getInstance();
+		myActiveVouchers = DBLoader.loadActiveVouchers();
+		myMovies = DBLoader.loadMovies();
+		myTheaters = DBLoader.loadTheaters();
+		myActiveTickets = DBLoader.loadActiveTickets();
 	}
 	
 	private Theater searchTheater(String theaterId) {
@@ -82,7 +86,7 @@ public class TheaterApp {
 		return retVal;
 	}
 
-	private Ticket searchActiveTicket(int ticketId) {
+	private Ticket searchActiveTicket(String ticketId) {
 		Ticket retVal = null;
 		
 		int numTickets = myActiveTickets.size();
@@ -246,7 +250,7 @@ public class TheaterApp {
 		return new String[] {Boolean.toString(retVal)};
 	}
 	
-	public String[] buyTicket(int ticketId) {
+	public String[] buyTicket(String ticketId) {
 		boolean retVal = false;
 		
 		Ticket myTicket = searchActiveTicket(ticketId);
@@ -264,7 +268,7 @@ public class TheaterApp {
 		return new String[] {Boolean.toString(retVal)};
 	}
 	
-	public String[] cancelTicket(int ticketId) {
+	public String[] cancelTicket(String ticketId) {
 		boolean retVal = false;
 		
 		Ticket myTicket = searchActiveTicket(ticketId);
