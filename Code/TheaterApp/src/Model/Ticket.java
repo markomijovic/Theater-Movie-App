@@ -3,9 +3,6 @@ package Model;
 public class Ticket {
 
 	private boolean sold;
-	private String theaterId;
-	private String movieId;
-	private int showingId;
 	private String id;
 	private double cost;
 
@@ -17,18 +14,6 @@ public class Ticket {
 	
 	public String getId() {
 		return id;
-	}
-
-	public String getTheaterId() {
-		return theaterId;
-	}
-
-	public String getMovieId() {
-		return movieId;
-	}
-
-	public int getShowingId() {
-		return showingId;
 	}
 	
 	public double getCost() {

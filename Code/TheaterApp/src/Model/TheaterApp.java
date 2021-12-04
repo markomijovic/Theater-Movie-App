@@ -5,7 +5,7 @@ import java.util.Enumeration;
 import java.util.ArrayList;
 
 /**
- * This is the main class for the backend. It runs all operations.
+ * This is the main class for the back-end. It runs all operations.
 
  */
 public class TheaterApp {
@@ -17,7 +17,6 @@ public class TheaterApp {
 	
 	private ArrayList<Theater> myTheaters;
 	private ArrayList<Movie> myMovies;
-	private ArrayList<Ticket> myActiveTickets;
 	private ArrayList<Voucher> myActiveVouchers;
 	private UserSystem myUserSystem;
 	private MessageSystem myMessageSystem;
@@ -32,8 +31,7 @@ public class TheaterApp {
 		myUserSystem = UserSystem.getInstance();
 		myActiveVouchers = DBLoader.loadActiveVouchers();
 		myMovies = DBLoader.loadMovies();
-		myTheaters = DBLoader.loadTheaters();
-		myActiveTickets = DBLoader.loadActiveTickets();
+		myTheaters = DBLoader.loadTheaters(myMovies);
 	}
 	
 	private Theater searchTheater(String theaterId) {
@@ -64,7 +62,7 @@ public class TheaterApp {
 		return retVal;
 	}
 
-	private Showing searchShowing(String theaterId, String movieId, int showingId) {
+	private Showing searchShowing(String theaterId, String movieId, String showingId) {
 		Showing retVal = null;
 
 		Theater myTheater = searchTheater(theaterId);
@@ -75,7 +73,7 @@ public class TheaterApp {
 			if (myShowings != null) {
 				int numShowings = myShowings.size();
 				for (int i = 0; i < numShowings; i++) {
-					if (myShowings.get(i).getId() == showingId) {
+					if (myShowings.get(i).getId().equals(showingId)) {
 						retVal = myShowings.get(i);
 						break;
 					}
@@ -86,12 +84,13 @@ public class TheaterApp {
 		return retVal;
 	}
 
-	private Ticket searchActiveTicket(String ticketId) {
+	private Ticket searchActiveTicket(Showing myShowing, String ticketId) {
 		Ticket retVal = null;
 		
+		ArrayList<Ticket> myActiveTickets = myShowing.getMyTickets();
 		int numTickets = myActiveTickets.size();
 		for (int i = 0; i < numTickets; i++) {
-			if (myActiveTickets.get(i).getId() == ticketId) {
+			if (myActiveTickets.get(i).getId().equals(ticketId)) {
 				retVal = myActiveTickets.get(i);
 				break;
 			}
@@ -177,7 +176,7 @@ public class TheaterApp {
 		return (String[]) retVal.toArray();
 	}
 	
-	public String[] getSeats(String theaterId, String movieId, int showingId) {
+	public String[] getSeats(String theaterId, String movieId, String showingId) {
 		ArrayList<String> retVal = new ArrayList<String>();
 		
 		Showing myShowing = searchShowing(theaterId, movieId, showingId);
@@ -250,10 +249,11 @@ public class TheaterApp {
 		return new String[] {Boolean.toString(retVal)};
 	}
 	
-	public String[] buyTicket(String ticketId) {
+	public String[] buyTicket(String theaterId, String movieId, String showingId, String ticketId) {
 		boolean retVal = false;
 		
-		Ticket myTicket = searchActiveTicket(ticketId);
+		Showing myShowing = searchShowing(theaterId, movieId, showingId);
+		Ticket myTicket = searchActiveTicket(myShowing, ticketId);
 		
 		if (myTicket != null) {
 			if (!myTicket.isSold())
@@ -268,16 +268,14 @@ public class TheaterApp {
 		return new String[] {Boolean.toString(retVal)};
 	}
 	
-	public String[] cancelTicket(String ticketId) {
+	public String[] cancelTicket(String theaterId, String movieId, String showingId, String ticketId) {
 		boolean retVal = false;
-		
-		Ticket myTicket = searchActiveTicket(ticketId);
+
+		Showing myShowing = searchShowing(theaterId, movieId, showingId);
+		Ticket myTicket = searchActiveTicket(myShowing, ticketId);
 		
 		if (myTicket != null) {
 			if (myTicket.isSold()) {
-				Showing myShowing = searchShowing(myTicket.getTheaterId(), 
-												  myTicket.getMovieId(), 
-												  myTicket.getShowingId());
 				if (canCancelTicket(myShowing.getShowtime(), new Date())) {
 					myTicket.returnTicket();
 					Voucher myVoucher = issueVoucher(currentUser, myTicket);

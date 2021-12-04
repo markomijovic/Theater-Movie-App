@@ -12,7 +12,7 @@ public class DBLoader {
 	 *  PROMISES: Returns the list of all theaters
 	 *  REQUIRES: Connection to information storage
 	 */
-	public static ArrayList<Theater> loadTheaters(){
+	public static ArrayList<Theater> loadTheaters(ArrayList<Movie> listOfAllMovies){
 		ArrayList<Theater> myTheaters = new ArrayList<Theater>();
 		//TODO: Add a couple of theater entries
 		return myTheaters;
@@ -38,19 +38,6 @@ public class DBLoader {
 		ArrayList<RegisteredUser> myUsers = new ArrayList<RegisteredUser>();
 		//TODO: Add a couple of users
 		return myUsers;
-	}
-
-	/** Loads the information for all active tickets from storage.
-	 *  Note that a ticket is only active if the showing has not occured yet.
-	 * 
-	 *  PROMISES: Returns the list of all active tickets
-	 *  REQUIRES: Connection to information storage
-	 */
-	public static ArrayList<Ticket> loadActiveTickets(){
-		ArrayList<Ticket> myActiveTickets = new ArrayList<Ticket>();
-		//TODO: Add tickets
-		// Note that a ticket is only valid if its showing is today or later
-		return myActiveTickets;
 	}
 
 	/** Loads the information for all active vouchers from storage
