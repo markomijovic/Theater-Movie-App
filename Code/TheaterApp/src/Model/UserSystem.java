@@ -2,14 +2,32 @@ package Model;
 
 import java.util.ArrayList;
 
+/**
+ * UserSystem is a Singleton pattern that is used to manage the 
+ * log in, registration and storage of registered users.
+ */
 public class UserSystem {
+	/**
+	 * Only instance for the user system.
+	 */
 	private static UserSystem myInstance;
+	/**
+	 * UserSystem holds a list of all registered users.
+	 */
 	private ArrayList<RegisteredUser> myUsers;
 	
+	/**
+	 * When the system is created, user information is loaded from the 
+	 * database via DBLoader static class.
+	 */
 	private UserSystem() {
 		myUsers = DBLoader.loadUsers();
 	}
 	
+	/**
+	 * Returns the only instance of UserSystem. If there is no instance,
+	 * one is created.
+	 */
 	public static UserSystem getInstance() {
 		if (myInstance == null)
 			return new UserSystem();
@@ -17,6 +35,11 @@ public class UserSystem {
 			return myInstance;
 	}
 
+	/**
+	 * Search for a registered user.
+	 * PROMISES: A registered user object with the given username
+	 * REQUIRES: Username for user
+	 */
 	private RegisteredUser searchUser(String username) {
 		RegisteredUser retVal = null;
 
@@ -31,6 +54,13 @@ public class UserSystem {
 		return retVal;
 	}
 
+	/**
+	 * Returns the RegisteredUser object upon a successful log in.
+	 * If log in is unsuccessful, null is returned.
+	 * PROMISES: To search for username in the database, then validate the given password.
+	 *           If successful, the user is returned, otherwise null is returned.
+	 * REQUIRES: username and password to be attempted
+	 */
 	public RegisteredUser login(String username, String password) {
 		RegisteredUser retVal = searchUser(username);
 
@@ -42,6 +72,11 @@ public class UserSystem {
 		return retVal;
 	}
 
+	/**
+	 * Registers a user into the user system.
+	 * PROMISES: To create a registered user and add it to the database.
+	 * REQUIRES: All data members for registered user.
+	 */
 	public RegisteredUser register(String username, String password, String name, String address, PaymentInfo myPaymentInfo) {
 		RegisteredUser retVal = null;
 		
