@@ -70,4 +70,25 @@ public class PaymentInfo {
 	public String getEmail() {
 		return email;
 	}
+	
+	/**
+	 * Returns credit card number
+	 */
+	public int getCreditCardNumber() {
+		return creditCardNumber;
+	}
+
+	/**
+	 * Returns expiry month
+	 */
+	public int getExpiryMonth() {
+		return expiryMonth;
+	}
+
+	/**
+	 * Returns expiry year
+	 */
+	public int getExpiryYear() {
+		return expiryYear;
+	}
 }
