@@ -37,7 +37,6 @@ public class Voucher {
 	 * Returns all required information for the voucher.
 	 */
 	public String getInformation() {
-		//TODO
 		return "Voucher id: " + Integer.toString(id) + "\n" +
 			   "Voucher value: $" + Double.toString(refundValue) + "\n" +
 			   "Issue date: " + issueDate.toString() + "\n" +

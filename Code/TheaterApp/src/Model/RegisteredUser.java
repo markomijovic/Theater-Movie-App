@@ -24,11 +24,6 @@ public class RegisteredUser extends User{
 	
 	/**
 	 * Constructor initializing all data members.
-	 * @param username
-	 * @param password
-	 * @param name
-	 * @param address
-	 * @param myPaymentInfo
 	 */
 	RegisteredUser(String username, String password, String name, String address, PaymentInfo myPaymentInfo){
 		this.username = username;
