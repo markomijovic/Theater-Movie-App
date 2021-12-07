@@ -30,6 +30,7 @@ public class LoginPage extends Page{
         title.setFont(new Font("Ariel", Font.BOLD, 20));
         this.add(title);
 
+        
   	//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	
 	usernameLabel = new JLabel("Username");
