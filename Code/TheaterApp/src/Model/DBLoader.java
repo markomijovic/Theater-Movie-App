@@ -12,7 +12,7 @@ public class DBLoader {
 	static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
 	static final String DB_URL = "jdbc:mysql://localhost:3306/movieapp";
 	static final String USERNAME = "root";
-	static final String PASSWORD = ___;
+	static final String PASSWORD = "";
 
 	public DBLoader() throws SQLException {
 	}
@@ -33,14 +33,14 @@ public class DBLoader {
 	 *  PROMISES: Returns the list of all movies
 	 *  REQUIRES: Connection to information storage
 	 */
-	public static ArrayList<Movie> loadMovies(Theater t) {
+	public static ArrayList<Movie> loadMovies() {
 		ArrayList<Movie> myMovies = new ArrayList<Movie>();
 		try {
 			String query = String.format("SELECT movieName, exclusiveNews, showtimeListID FROM movie WHERE theaterName=?;");
 			Connection con=DriverManager.getConnection(
 					DB_URL,USERNAME,PASSWORD);
 			PreparedStatement statement = con.prepareStatement(query);
-			statement.setString(1, t.getTheaterName());
+			//statement.setString(1, t.getTheaterName());
 			ResultSet resultSet = statement.executeQuery();
 			if (resultSet != null) {
 				while (resultSet.next()) {
@@ -77,7 +77,11 @@ public class DBLoader {
 	 */
 	public static ArrayList<RegisteredUser> loadUsers(){
 		ArrayList<RegisteredUser> myUsers = new ArrayList<RegisteredUser>();
+		
+		PaymentInfo myPaymentInfo = new PaymentInfo();
+		RegisteredUser myUser = new RegisteredUser("gabe", "1234", "Gabriel", "Calgary", myPaymentInfo);
 		//TODO: Add a couple of users
+		myUsers.add(myUser);
 		return myUsers;
 	}
 
@@ -95,7 +99,7 @@ public class DBLoader {
 	}
 
 	public static void main(String[] args) throws SQLException {
-		DBLoader.loadMovies(new Theater("ge", "CrossIron Cineplex"));
+		DBLoader.loadMovies();
 
 		// loadtheater
 		// theater(postalcode: from theater table, dictionary<movie, arraylist<showings>>
