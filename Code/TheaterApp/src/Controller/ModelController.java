@@ -33,14 +33,17 @@ public class ModelController {
 					if (Boolean.parseBoolean(modelInput[0])) {
 						modelOutput = myModel.login(modelInput[1], modelInput[2]);
 						myUI.sendMessage(modelOutput[0]);
-						if (Boolean.parseBoolean(modelOutput[0]))
+						if (Boolean.parseBoolean(modelOutput[0])) {
 							pageId = 0;
+							done = true;
+						}
 					}
 					else
 						done = true;
 				}
 				pageId = 0;
 				break;
+			case 2:
 			default: //Homepage
 				pageId = -1;
 				break;
