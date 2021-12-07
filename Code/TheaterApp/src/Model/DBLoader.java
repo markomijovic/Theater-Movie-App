@@ -91,7 +91,7 @@ public class DBLoader {
 		} catch(Exception e) {System.out.println(e);}
 		*/
 
-		Movie myMovie = new Movie("Die Hard", "Best Christmas movie", myObserver);
+		Movie myMovie = new Movie("Die Hard", "Coming next fall", "Best Christmas movie", "Bruce Willis", myObserver);
 		myMovies.add(myMovie);
 		return myMovies;
 	}

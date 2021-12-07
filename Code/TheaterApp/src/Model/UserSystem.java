@@ -77,11 +77,11 @@ public class UserSystem {
 	 * PROMISES: To create a registered user and add it to the database.
 	 * REQUIRES: All data members for registered user.
 	 */
-	public RegisteredUser register(String username, String password, String name, String address, PaymentInfo myPaymentInfo) {
+	public RegisteredUser register(String username, String password, String name, PaymentInfo myPaymentInfo) {
 		RegisteredUser retVal = null;
 		
 		if (searchUser(username) == null) {
-			retVal = new RegisteredUser(username, password, name, address, myPaymentInfo);
+			retVal = new RegisteredUser(username, password, name, myPaymentInfo);
 			myUsers.add(retVal);
 		}
 		

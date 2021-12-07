@@ -283,13 +283,13 @@ public class TheaterApp {
 	 * Registers the current user as a registered user.
 	 * Annual fee is charged.
 	 */
-	public String[] register(String username, String password, String name, String address) {
+	public String[] register(String username, String password, String name) {
 		boolean retVal = false;
 
 		PaymentInfo myPaymentInfo = currentUser.getPaymentInfo();
 
 		if (myPaymentSystem.validPaymentInfo(myPaymentInfo)) {
-			RegisteredUser myRegisteredUser = myUserSystem.register(username, password, name, address, myPaymentInfo);
+			RegisteredUser myRegisteredUser = myUserSystem.register(username, password, name, myPaymentInfo);
 			
 			if (myRegisteredUser != null) {
 				myPaymentSystem.charge(myPaymentInfo, ANNUAL_FEE);

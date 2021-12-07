@@ -6,9 +6,9 @@ import java.awt.*;
 import java.util.HashMap;
 import javax.swing.*;
 
-public abstract class Page extends JFrame {
+public class Page extends JFrame {
 
-	public abstract String[] interactWithUser();
+	public String[] interactWithUser() {return null;}
 	public void sendMessage(String[] message) {}
 	public void loadModelInfo(String[] pageInput) {}
 
