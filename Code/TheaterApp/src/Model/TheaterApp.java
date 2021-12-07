@@ -2,6 +2,7 @@ package Model;
 
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.Map;
 import java.util.ArrayList;
 
 /**
@@ -58,7 +59,7 @@ public class TheaterApp {
 		myPaymentSystem = new PaymentSystem();
 		myUserSystem = UserSystem.getInstance();
 		myActiveVouchers = DBLoader.loadActiveVouchers();
-		myMovies = DBLoader.loadMovies();
+		myMovies = DBLoader.loadMovies(this);
 		myTheaters = DBLoader.loadTheaters(myMovies);
 	}
 	
@@ -156,13 +157,14 @@ public class TheaterApp {
 	 * Get a list of theaters and their information.
 	 */
 	public String[] getTheaters(){
-		ArrayList<String> retVal = new ArrayList<String>();
 		
 		int numTheaters = myTheaters.size();
-		for (int i = 0; i < numTheaters; i++)
-			retVal.add(myTheaters.get(i).getTheaterInfo());
+		String[] retVal = new String[numTheaters];
 		
-		return (String[]) retVal.toArray();
+		for (int i = 0; i < numTheaters; i++)
+			retVal[i] = myTheaters.get(i).getTheaterInfo();
+		
+		return retVal;
 	}
 	
 	/**
@@ -174,11 +176,10 @@ public class TheaterApp {
 		Theater myTheater = searchTheater(theaterId);
 		
 		if (myTheater != null) {
-			Enumeration<Movie> myMovies = myTheater.getMySchedule().keys();
-			while(myMovies.hasMoreElements()) {
-	            Movie m = myMovies.nextElement();
-				retVal.add(m.getMovieInfo());
-	        }
+			Map<Movie, ArrayList<Showing>> mySchedule = myTheater.getMySchedule();
+			for (Map.Entry<Movie, ArrayList<Showing>> set : mySchedule.entrySet()) {
+				retVal.add(set.getKey().getMovieInfo());
+			}
 		}
 		
 		return (String[]) retVal.toArray();

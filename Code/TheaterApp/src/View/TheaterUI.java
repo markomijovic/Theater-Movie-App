@@ -11,7 +11,7 @@ public class TheaterUI {
 		return activePage.interactWithUser();
 	}
 
-	public void sendMessage(String message) {
+	public void sendMessage(String[] message) {
 		activePage.sendMessage(message);
 	}
 	

@@ -33,8 +33,8 @@ public class Movie {
 		this.title = title;
 		this.synopsis = synopsis;
 		this.leadingActor = leadingActor;
-		setMovieNews(movieNews);
 		this.myObserver = myObserver;
+		setMovieNews(movieNews);
 	}
 	
 	/** 

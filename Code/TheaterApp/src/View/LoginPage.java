@@ -33,8 +33,8 @@ public class LoginPage extends Page{
 	}
 
 	@Override
-	public void sendMessage(String message) {
-		boolean loginSuccessful = Boolean.parseBoolean(message);
+	public void sendMessage(String[] message) {
+		boolean loginSuccessful = Boolean.parseBoolean(message[0]);
 
 		if (loginSuccessful)
 			System.out.println("Login is successful");

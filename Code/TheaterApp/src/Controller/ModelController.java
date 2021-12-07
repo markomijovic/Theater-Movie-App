@@ -32,7 +32,7 @@ public class ModelController {
 					modelInput = myUI.interactWithUser();
 					if (Boolean.parseBoolean(modelInput[0])) {
 						modelOutput = myModel.login(modelInput[1], modelInput[2]);
-						myUI.sendMessage(modelOutput[0]);
+						myUI.sendMessage(modelOutput);
 						if (Boolean.parseBoolean(modelOutput[0])) {
 							pageId = 0;
 							done = true;
@@ -46,6 +46,9 @@ public class ModelController {
 			case 2: //Register
 				break;
 			case 3: //Browse Theater
+				modelOutput = myModel.getTheaters();
+				myUI.sendMessage(modelOutput);
+				modelInput = myUI.interactWithUser();
 				break;
 			case 4: //Cancel ticket
 				break;

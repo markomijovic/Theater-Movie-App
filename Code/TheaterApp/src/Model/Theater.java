@@ -1,8 +1,9 @@
 package Model;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class is a representation for a movie theater location.
@@ -15,12 +16,12 @@ public class Theater {
 	/**
 	 * List of movies playing in the theater along with their show times.
 	 */
-	private Dictionary<Movie, ArrayList<Showing>> mySchedule;
+	private HashMap<Movie, ArrayList<Showing>> mySchedule;
 	
 	/**
 	 * Constructor for theater that initializes data members.
 	 */
-	Theater (String postalCode, Dictionary<Movie, ArrayList<Showing>> schedule) {
+	Theater (String postalCode, HashMap<Movie, ArrayList<Showing>> schedule) {
 		this.postalCode = postalCode;
 		this.mySchedule = schedule;
 	}
@@ -61,12 +62,10 @@ public class Theater {
 	public String getTheaterInfo() {
 		String retVal = "Theater postal code: " + postalCode + "\n" +
 						"Schedule: \n";
-		Enumeration<Movie> myMovies = mySchedule.keys();
-		while(myMovies.hasMoreElements()) {
-            Movie m = myMovies.nextElement();
-			retVal += "Movie:\n" + m.getMovieInfo() + "\n";
+		for (Map.Entry<Movie, ArrayList<Showing>> set : mySchedule.entrySet()) {
+			retVal += "Movie:\n" + set.getKey().getMovieInfo() + "\n";
 			retVal += "Showtimes: \n";
-			ArrayList<Showing> myShowings = mySchedule.get(m);
+			ArrayList<Showing> myShowings = set.getValue();
 			int numShowings = myShowings.size();
 			for (int i = 0; i < numShowings; i++) {
 				retVal += myShowings.get(i).getShowtime().toString() + "\n";
@@ -85,7 +84,7 @@ public class Theater {
 	/**
 	 * Returns the schedule of the theater.
 	 */
-	public Dictionary<Movie, ArrayList<Showing>> getMySchedule() {
+	public HashMap<Movie, ArrayList<Showing>> getMySchedule() {
 		return mySchedule;
 	}
 }

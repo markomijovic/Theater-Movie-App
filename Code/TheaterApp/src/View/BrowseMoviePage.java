@@ -8,4 +8,13 @@ public class BrowseMoviePage extends Page {
 		return null;
 	}
 
+	@Override
+	public void sendMessage(String[] message) {
+		int numTheaters = message.length;
+		
+		for (int i = 0; i < numTheaters; i++) {
+			System.out.println(message[i]);
+		}
+	}
+
 }
