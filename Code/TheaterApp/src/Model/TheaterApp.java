@@ -3,6 +3,7 @@ package Model;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Map;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 /**
@@ -144,10 +145,10 @@ public class TheaterApp {
 	 * PROMISES: Returns true if ticket can be cancelled
 	 * REQUIRES: Showtime for movie and the cancellation date.
 	 */
-	private boolean canCancelTicket(Date showtime, Date cancellationDate) {
+	private boolean canCancelTicket(Timestamp timestamp, Date cancellationDate) {
 		boolean retVal = false;
 		
-		if ((showtime.getTime() - cancellationDate.getTime()) / 3600000.0 <= 72.0)
+		if ((timestamp.getTime() - cancellationDate.getTime()) / 3600000.0 <= 72.0)
 			retVal = true;
 		
 		return retVal;

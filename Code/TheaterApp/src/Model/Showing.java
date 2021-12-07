@@ -1,5 +1,6 @@
 package Model;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -24,10 +25,10 @@ public class Showing {
 	/**
 	 * Constructor for Showing inititalizes all data members.
 	 */
-	Showing (String id, ArrayList<Ticket> myTickets, Timestamp showtime){
+	Showing (String id, ArrayList<Ticket> myTickets, Timestamp datetime){
 		this.id = id;
 		this.myTickets = myTickets;
-		this.showtime = showtime;
+		this.showtime = datetime;
 	}
 
 	/** 
