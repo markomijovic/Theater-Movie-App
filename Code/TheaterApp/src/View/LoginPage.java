@@ -19,6 +19,8 @@ public class LoginPage extends Page{
 	public  JButton login;
 	private  JButton guest;
 	public  JLabel regUserSuccess;
+	private  JButton back;
+	
 	
 	public LoginPage() {
 		this.setSize(350, 400);
@@ -60,15 +62,21 @@ public class LoginPage extends Page{
 	guest.setBounds(180,130,175,25);
 	this.add(guest);
 	
+	back = new JButton("Back");
+	back.setBounds(85,160,175,25);
+	this.add(back);
+	
 	regUserSuccess = new JLabel("");
 	regUserSuccess.setBounds(10,170,200,25);
 	this.add(regUserSuccess);
 	}
 	
 	
-	public void addButtonActionListener(ActionListener RegUserListener, ActionListener GuestListener) {
+	public void addButtonActionListener(ActionListener RegUserListener, ActionListener GuestListener, ActionListener BackListener) {
 		login.addActionListener(RegUserListener);
 		guest.addActionListener(GuestListener);
+		back.addActionListener(BackListener);
+		
 	}
 	
 	 public void display() {

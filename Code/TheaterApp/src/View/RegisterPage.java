@@ -33,7 +33,7 @@ public class RegisterPage extends Page {
 	
 	
 	public  JButton register;
-	private  JButton guest;
+	private JButton back;
 	public  JLabel regUserSuccess;
 	
 	public RegisterPage() {
@@ -140,10 +140,15 @@ public class RegisterPage extends Page {
     	register.setBounds(100,370,175,25);
     	this.add(register);
     	
+    	back = new JButton("Back");
+    	back.setBounds(100,400,175,25);
+    	this.add(back);
+    	
       	}
 	
-	public void addButtonActionListener(ActionListener RegisterListener) {
+	public void addButtonActionListener(ActionListener RegisterListener, ActionListener BackListener) {
 		register.addActionListener(RegisterListener);
+		back.addActionListener(BackListener);
 	}
 	
 	 public void display() {

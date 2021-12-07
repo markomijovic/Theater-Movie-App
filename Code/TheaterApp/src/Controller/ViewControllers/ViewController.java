@@ -14,6 +14,18 @@ public class ViewController {
         System.out.println("clicked browse");
     }
     
+    public void showHomePage() {
+    	HomePage p = new HomePage();
+    	HomepageController q= new HomepageController(p);
+        p.display();
+    }
+    
+    public void showCancelTicketPage() {
+    	CancelTicketPage p = new CancelTicketPage();
+    	CancelTicketController q= new CancelTicketController(p);
+        p.display();
+    }
+    
     public void showLoginPage() {
     	
     	LoginPage p = new LoginPage();
