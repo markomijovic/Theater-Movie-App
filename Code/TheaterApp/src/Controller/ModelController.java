@@ -22,24 +22,26 @@ public class ModelController {
 			myUI.switchPage(pageId);
 			
 			switch (pageId) {
-			case 0: 
+			case 0: //Homepage
 				modelInput = myUI.interactWithUser();
 				pageId = Integer.parseInt(modelInput[0]);
 				break;
-			case 1:
+			case 1: //Login
 				boolean done = false;
 				while (!done) {
 					modelInput = myUI.interactWithUser();
-					if (Boolean.getBoolean(modelInput[0])) {
+					if (Boolean.parseBoolean(modelInput[0])) {
 						modelOutput = myModel.login(modelInput[1], modelInput[2]);
 						myUI.sendMessage(modelOutput[0]);
+						if (Boolean.parseBoolean(modelOutput[0]))
+							pageId = 0;
 					}
 					else
 						done = true;
 				}
 				pageId = 0;
 				break;
-			default:
+			default: //Homepage
 				pageId = -1;
 				break;
 			}
