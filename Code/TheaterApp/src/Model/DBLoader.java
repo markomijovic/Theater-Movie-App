@@ -2,6 +2,7 @@ package Model;
 
 import java.lang.reflect.Array;
 import java.sql.*;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -31,31 +32,29 @@ public class DBLoader {
 	 *  PROMISES: Returns the list of all theaters
 	 *  REQUIRES: Connection to information storage
 	 */
-	public static ArrayList<Theater> loadTheaters(ArrayList<Movie> listOfAllMovies){
+	public static ArrayList<Theater> loadTheaters(){
+		// Tested. Confirmed it works.
 		ArrayList<Theater> myTheaters = new ArrayList<>();
-
-		HashMap<Movie, ArrayList<Showing>> mySchedule = new HashMap<Movie, ArrayList<Showing>>();
-
-		int numMovies = listOfAllMovies.size();
-		for (int i = 0; i < numMovies; i++) {
-			Movie myMovie = listOfAllMovies.get(i);
-
-			ArrayList<Ticket> myTickets = new ArrayList<Ticket>();
-			Ticket myTicket = new Ticket("A2", 14.99, false);
-			myTickets.add(myTicket);
-
-			ArrayList<Showing> myShowings = new ArrayList<Showing>();
-			Showing myShowing = new Showing("Room 1", myTickets, new Date());
-			myShowings.add(myShowing);
-
-			if(myShowings.size() > 0)
-				mySchedule.put(myMovie, myShowings);
-		}
-
-		//Theater myTheater = new Theater("POSTALCODE", mySchedule);
-
-		//TODO: Add a couple of theater entries
-		//myTheaters.add(myTheater);
+		try {
+			Connection conn = DBLoader.getConn();
+			String query = "SELECT theaterName, postalCode, movieListID FROM theater;";
+			PreparedStatement statement = conn.prepareStatement(query);
+			ResultSet res = statement.executeQuery();
+			if (res != null) {
+				while (res.next()) {
+					HashMap<Movie, ArrayList<Showing>> theater_schedule = new HashMap<>();
+					String tName = res.getString(1);
+					String pCode = res.getString(2);
+					int movielistid = res.getInt(3);
+					ArrayList<Movie> tMovies = DBLoader.loadMovies(new TheaterApp(), tName);
+					for (Movie movie : tMovies) {
+						ArrayList<Showing> movie_showings = DBLoader.loadShowings(movie);
+						theater_schedule.put(movie, movie_showings);
+					}
+					myTheaters.add(new Theater(pCode, tName, theater_schedule));
+				}
+			}
+		} catch(Exception e) {System.out.println(e);}
 		return myTheaters;
 	}
 
@@ -65,45 +64,113 @@ public class DBLoader {
 	 *  REQUIRES: Connection to information storage
 	 */
 	public static ArrayList<Movie> loadMovies(TheaterApp myObserver) {
+		// Tested. Works as expected
 		ArrayList<Movie> myMovies = new ArrayList<Movie>();
-		/*
 		try {
-			String query = String.format("SELECT movieName, exclusiveNews, showtimeListID FROM movie WHERE theaterName=?;");
-			Connection con=DriverManager.getConnection(
-					DB_URL,USERNAME,PASSWORD);
+			String query = String.format("SELECT movieName, exclusiveNews, showtimeListID FROM movie");
+			Connection con = DBLoader.getConn();
 			PreparedStatement statement = con.prepareStatement(query);
-			//statement.setString(1, t.getTheaterName());
-			ResultSet resultSet = statement.executeQuery();
-			if (resultSet != null) {
-				while (resultSet.next()) {
-					ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
-					for (int i = 1; i <= resultSetMetaData.getColumnCount(); i++) {
-						int type = resultSetMetaData.getColumnType(i);
-						if (type == Types.VARCHAR || type == Types.CHAR) {
-							System.out.println(resultSet.getString(i));
-						} else {
-							System.out.println(resultSet.getInt(i));
-						}
-					}
-					System.out.println("-----------");
+			ResultSet res = statement.executeQuery();
+			if (res != null) {
+				while (res.next()) {
+					String movie_name = res.getString(1);
+					String news = res.getString(2);
+					int showtimelistID = res.getInt(3);
+					myMovies.add(new Movie(movie_name, news, myObserver, showtimelistID));
 				}
 			}
 		} catch(Exception e) {System.out.println(e);}
-		*/
-
-		Movie myMovie = new Movie("Die Hard", "Coming next fall", "Best Christmas movie", "Bruce Willis", myObserver);
-		myMovies.add(myMovie);
 		return myMovies;
 	}
 
+	/** Loads the information for movies for a specific theater given by theater name
+	 *  PROMISES: Returns the list of all movies
+	 *  REQUIRES: Connection to information storage
+	 */
+	public static ArrayList<Movie> loadMovies(TheaterApp myObserver, String theater_name) {
+		// Tested. Works as expected
+		ArrayList<Movie> myMovies = new ArrayList<Movie>();
+		try {
+			String query = String.format("SELECT M.movieName, exclusiveNews, showtimeListID FROM "+
+					"theater as T join movielist as ML on T.movieListID = ML.id "+
+					"join movie as M on ML.movieName = M.movieName "+
+					"WHERE T.theaterName=?;");
+			Connection con = DBLoader.getConn();
+			PreparedStatement statement = con.prepareStatement(query);
+			statement.setString(1, theater_name);
+			ResultSet res = statement.executeQuery();
+			if (res != null) {
+				while (res.next()) {
+					String movie_name = res.getString(1);
+					String news = res.getString(2);
+					int showtimelistID = res.getInt(3);
+					myMovies.add(new Movie(movie_name, news, myObserver, showtimelistID));
+				}
+			}
+		} catch (Exception e) {System.out.println(e);}
+		return myMovies;
+	}
+
+	/**
+	 * Loads showings for a given movie
+	 * @param m Movie
+	 * @return arraylist of showings
+	 */
 	public static ArrayList<Showing> loadShowings(Movie m){
+		// Tested. Works as expected.
 		ArrayList<Showing> myShowings = new ArrayList<>();
+		try {
+			Connection conn = DBLoader.getConn();
+			String query = "SELECT datee, totalRows, totalCols, ticketListID from "+
+					"movie as M join showtimelist as SL on M.showtimeListID = SL.Id "+
+					"join showtime S on SL.showtimeID = S.id "+
+					"WHERE (M.showtimeListID=? AND M.movieName=?);";
+			PreparedStatement statement = conn.prepareStatement(query);
+			statement.setInt(1, m.getShowingListID());
+			statement.setString(2, m.getTitle());
+			ResultSet res = statement.executeQuery();
+			if (res != null) {
+				DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy.MM.dd hh:mm:ss");
+				while (res.next()) {
+					Timestamp datetime = res.getTimestamp(1);
+					int rows = res.getInt(2);
+					int cols = res.getInt(3);
+					int ticketListID = res.getInt(4);
+					ArrayList<Ticket> showtime_tickets = DBLoader.loadTickets(ticketListID);
+					myShowings.add(new Showing("void", showtime_tickets, datetime));
+				}
+			}
+		} catch(Exception e) {System.out.println(e);}
 		return myShowings;
 	}
 
-	public static ArrayList<Ticket> loadTickets(Showing s) {
+	/**
+	 * Loads tickets from a database for a given showing
+	 * @param listID ticket db array id
+	 * @return arraylist of tickets
+	 */
+	public static ArrayList<Ticket> loadTickets(int listID) {
+		// Tested. Works as expected.
 		ArrayList<Ticket> myTickets = new ArrayList<>();
-		String query = String.format("");
+		try {
+			Connection conn = DBLoader.getConn();
+			String query = "SELECT id, ticketStatus, seatRow, seatCol, cost FROM "+
+					"ticketlist as TL join ticket as T on TL.ticketID = T.ID "+
+					"WHERE TL.ticketListID=?";
+			PreparedStatement statement = conn.prepareStatement(query);
+			statement.setInt(1, listID);
+			ResultSet res = statement.executeQuery();
+			if (res != null) {
+				while (res.next()) {
+					String ticketID = String.valueOf(res.getInt(1));
+					boolean isSold = res.getBoolean(2);
+					int row = res.getInt(3);
+					int col = res.getInt(4);
+					double cost = res.getDouble(5);
+					myTickets.add(new Ticket(ticketID, cost, isSold, row, col));
+				}
+			}
+		} catch(Exception e) {System.out.println(e);}
 		return myTickets;
 	}
 
@@ -180,7 +247,11 @@ public class DBLoader {
 	}
 
 	public static void main(String[] args) throws SQLException {
-
+//		ArrayList<Theater> ths = DBLoader.loadTheaters();
+//		for (Theater t : ths) {
+//			System.out.println(t.getTheaterName() + ":" + t.getPostalCode() + t.getMySchedule().toString());
+//		}
+		// DBLoader.loadMovies(new TheaterApp());
 //		ArrayList<RegisteredUser> users =DBLoader.loadUsers();
 //		System.out.println(users.get(0).getName());
 //		System.out.println(users.get(6).getName());

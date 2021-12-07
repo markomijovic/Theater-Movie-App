@@ -19,12 +19,12 @@ public class Showing {
 	/**
 	 * Time for showing.
 	 */
-	private Date showtime;
+	private Timestamp showtime;
 	
 	/**
 	 * Constructor for Showing inititalizes all data members.
 	 */
-	Showing (String id, ArrayList<Ticket> myTickets, Date showtime){
+	Showing (String id, ArrayList<Ticket> myTickets, Timestamp showtime){
 		this.id = id;
 		this.myTickets = myTickets;
 		this.showtime = showtime;
@@ -67,7 +67,7 @@ public class Showing {
 	/**
 	 * Returns time for showing.
 	 */
-	public Date getShowtime() {
+	public Timestamp getShowtime() {
 		return showtime;
 	}
 	

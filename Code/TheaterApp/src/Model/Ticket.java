@@ -18,14 +18,31 @@ public class Ticket {
 	 */
 	private double cost;
 
+	private class Seat {
+		int row;
+		int col;
+		Seat(int r, int c){
+			row=r;
+			col=c;
+		}
+		public int getRow() {
+			return row;
+		}
+		public int getCol() {
+			return col;
+		}
+	}
+	private Seat seat;
 	/**
 	 * Constructor for ticket initializes data members. 
 	 */
-	Ticket (String id, double cost, boolean sold) {
+	Ticket (String id, double cost, boolean sold, int r, int c) {
 		this.id = id;
 		this.cost = cost;
 		this.sold = sold;
+		this.seat = new Seat(r, c);
 	}
+
 	
 	/**
 	 * Returns id for ticket.
