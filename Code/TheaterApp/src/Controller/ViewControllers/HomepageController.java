@@ -10,7 +10,8 @@ public class HomepageController extends ViewController {
     public HomepageController(HomePage theView) {
         this.theView = theView;
         theView.addButtonActionListener(new BrowseListener(),
-                new BuyListener(), new RegisterListener());
+                new BuyListener(), new RegisterListener(),
+                new LoginListener());
     }
 
     class BrowseListener implements ActionListener {
@@ -38,4 +39,17 @@ public class HomepageController extends ViewController {
             showRegisterPage();
         }
     }
+    
+    
+    class LoginListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            //AppSeting.option="goToLogin";
+            theView.setVisible(false);
+            showLoginPage();
+        }
+    }
+    
+    
+    
 }
