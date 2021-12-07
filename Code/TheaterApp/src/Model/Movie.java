@@ -29,12 +29,12 @@ public class Movie {
 	/**
 	 * Constructor for movie.
 	 */
-	Movie(String title, String movieNews, String synopsis, String leadingActor, TheaterApp myObserver) {
+	private int showingListID;
+	Movie(String title, String movieNews, TheaterApp myObserver, int sID) {
 		this.title = title;
-		this.synopsis = synopsis;
-		this.leadingActor = leadingActor;
+		setMovieNews(movieNews);
 		this.myObserver = myObserver;
-		this.movieNews = movieNews;
+		showingListID = sID;
 	}
 	
 	/** 
@@ -42,8 +42,7 @@ public class Movie {
 	 */
 	public String getMovieInfo() {
 		return title + "\n" +
-			   synopsis + "\n" +
-			   "Starring " + leadingActor;
+			   movieNews;
 	}
 	
 	/**
@@ -60,6 +59,6 @@ public class Movie {
 	public void setMovieNews(String news) {
 		// Observer Pattern: When news are updated, all registered users are notified.
 		movieNews = news;
-		myObserver.sendExclusiveMovieNews(news);
+		//myObserver.sendExclusiveMovieNews(news);
 	}
 }

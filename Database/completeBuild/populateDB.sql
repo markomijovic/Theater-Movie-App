@@ -1,77 +1,48 @@
 USE movieapp;
 
--- Populating theaterManagement table
-INSERT INTO theaterManagement
-VALUES	("Cineplex"),
-		("Landmark");
-
--- Populating theaterList table
-INSERT INTO theaterList
-VALUES	("Cineplex","Crowfoot"),
-		("Cineplex","Chinook"),
-		("Landmark","CountryHills"),
-        ("Landmark", "MarketMall");
-
 -- Populating theater table
 INSERT INTO theater
-VALUES	("CrowfootWay", "Calgary","AB","T3F9L0", "Crowfoot",1), 
-		("CrowfootWay", "Calgary","AB","T3F9L0", "Crowfoot",2), 
-		("ChinookMall", "Calgary","AB","T2G8C0","Chinook",1), 
-        ("ChinookMall", "Calgary","AB","T2G8C0", "Chinook",2), 
-        ("CountryHillsLoop", "Calgary","AB","T5K0L0", "CountryHills",3), 
-        ("CountryHillsLoop", "Calgary","AB","T5K0L0", "CountryHills",4), 
-        ("MarketMallRoad", "Calgary","AB","T8V5J2", "MarketMall",3), 
-        ("MarketMallRoad", "Calgary","AB","T8V5J2", "MarketMall",4);
+VALUES	("Chinook Cineplex", "T3F9L0", 1), 
+		("Crowfoot Cineplex", "T2TT32",2), 
+		("CrossIron Cineplex", "TG3V21",1), 
+        ("Landmark Cineplex", "T1G3G3", 3);
         
 -- Populating movieList table
 INSERT INTO movieList
 VALUES	(1,"NoTimeToDie"),
 		(1,"Dune"),
+        (1,"MatrixResurrections"),
 		(2,"Dune"),
         (2,"MatrixResurrections"),
 		(3,"NoTimeToDie"),
-        (3,"Eternals"),
-        (4,"Eternals"),
-        (4,"MatrixResurrections");
+        (3,"Eternals");
         
  -- Populating movie table      
 INSERT INTO movie 
-VALUES	("NoTimeToDie", "Chinook Cineplex","Member get free popcorn",1), 
-		("Dune", "Crowfoot Cineplex","Follow on IG for discount",2), 
-        ("MatrixResurrections", "CrossIron Cineplex",null,1), 
-        ("Eternals", "Landmark Country Hills","Movie Giveaway!",2);     
+VALUES	("NoTimeToDie", "Member get free popcorn",1), 
+		("MatrixResurrections","Member get free popcorn",1), 
+		("Dune","Follow on IG for discount",2), 
+        ("Eternals","Movie Giveaway!",2);     
 
 -- Populating showtimeList table
 INSERT INTO showtimeList
-VALUES	(1,"17:00"),
-		(1,"18:00"),
-		(1,"19:00"),
-        (1,"20:00"),
-        (1,"21:00"),
-        (2,"17:00"),
-        (2,"18:00"),
-        (2,"19:00"),
-        (2,"20:00"),
-        (2,"21:00");
+VALUES	(1,1),
+		(1,2),
+		(1,3),
+        (1,4),
+        (1,5),
+        (2,1),
+        (2,2),
+        (2,3),
+        (2,4);
 
         
 -- Populating showtime table         
 INSERT INTO showtime 
-VALUES	("2021", "December", 6, "Monday", "17:00", 5,5,1),
-		("2021", "December", 6,"Monday", "18:00",5,5,1),
-        ("2021", "December", 6,"Monday", "19:00",5,5,1),
-        ("2021", "December", 6,"Monday", "20:00",5,5,1),
-        ("2021", "December", 6,"Monday", "21:00",5,5,1),
-        ("2021", "December", 7,"Tuesday", "17:00",5,5,1),
-        ("2021", "December", 7,"Tuesday", "18:00",5,5,1),
-        ("2021", "December", 7,"Tuesday", "19:00",5,5,1),
-        ("2021", "December", 7,"Tuesday", "20:00",5,5,1),
-		("2021", "December", 7,"Tuesday", "21:00",5,5,1),
-		("2021", "December", 11,"Saturday", "17:00",5,5,1),
-		("2021", "December", 11,"Saturday", "18:00",5,5,1),
-        ("2021", "December", 11,"Saturday", "19:00",5,5,1),
-        ("2021", "December", 11,"Saturday", "20:00",5,5,1),
-		("2021", "December", 11,"Saturday", "21:00",5,5,1);
+VALUES	(1, "2021-12-15T14:00:00",5,5,1),
+		(2, "2021-12-15T16:00:00",5,5,2),
+        (3, "2021-12-16T14:00:00",5,5,3),
+        (5, "2021-12-18T20:30:00",5,5,4);
        
 -- Populating ticketList table
 INSERT INTO ticketList
@@ -80,43 +51,57 @@ VALUES	(1,1),
 		(1,3),
         (1,4),
         (1,5),
-        (1,6),
-        (1,7),
-        (1,8),
-        (1,9),
-        (1,10);
+        (2,6),
+        (2,7),
+        (2,8),
+        (2,9),
+        (2,10),
+        (2,11),
+        (3,12),
+        (3,13),
+        (4,14),
+        (4,15),
+        (4,16),
+        (4,17);
 
 -- Populating ticket table
 INSERT INTO ticket 
-VALUES	(1,True, "A", 1, 12.50),
-		(2,True, "A", 2, 12.50),
-        (3,True, "A", 3, 12.50),
-        (4,True, "A", 4, 12.50),
-        (5,True, "A", 5, 12.50),
-        (6,True, "B", 1, 12.50),
-        (7,True, "B", 2, 12.50),
-        (8,True, "B", 3, 12.50),
-        (9,True, "B", 4, 12.50),
-        (10,True, "B", 5, 12.50);
+VALUES	(1,True, 1, 1, 12.50),
+		(2,True, 1, 2, 12.50),
+        (3,True, 1, 3, 12.50),
+        (4,True, 2, 4, 12.50),
+        (5,True, 3, 5, 12.50),
+        (6,True, 1, 5, 12.50),
+        (7,True, 2, 3, 12.50),
+        (8,True, 3, 2, 12.50),
+        (9,True, 4, 1, 12.50),
+        (10,True, 4, 2, 12.50),
+        (11,True, 2, 5, 12.50),
+        (12,True, 1, 5, 10),
+        (13,True, 3, 2, 9),
+        (14,True, 1, 2, 10),
+        (15,True, 2, 3, 10),
+        (16,True, 3, 4, 10),
+        (17,True, 4, 5, 10);
 	  
 
 -- Populating regUser table
 INSERT INTO regUser 
-VALUES	(1,"Bill", "Jones", "4034861894","passw0rd"),
-		(2,"Bob", "Smith", "40359846241","hello"),
-		(3,"Rachel", "Green", "4032197862","world"),
-		(4,"Marcus", "Brown", "4035132879","movies"),
-		(5,"Kevin", "Durant", "4032159873","pixel6"),
-		(6,"Kyrie", "Irving", "4039756418","basketball");
+VALUES	(1,"Bill", "Jones", "4034861894", "bill@gmail.com", "passw0rd"),
+		(2,"Bob", "Smith", "40359846241", "bob@gmail.com", "hello"),
+		(3,"Rachel", "Green", "4032197862", "rachel@yahoo.com", "world"),
+		(4,"Marcus", "Brown", "4035132879", "marcus@gmail.com", "movies"),
+		(5,"Kevin", "Durant", "4032159873",  "kevin@ucalgary.ca" ,"pixel6"),
+		(6,"Kyrie", "Irving", "4039756418", "kyrie@gmail.com", "basketball");
         
 -- Populating paymentInfo table
 INSERT INTO paymentInfo 
-VALUES	("123456789", "09/23", 754),
-		("987654321", "01/22", 754),
-		("741852963", "12/24", 754),
-		("369258147", "07/23", 754),
-        ("147258369", "11/23", 754),
-        ("789654123", "01/24", 754);
+VALUES	("123456789", 9, 23, 754, 1),
+		("987654321", 1, 22, 754, 2),
+		("741852963", 12, 24, 754, 3),
+		("369258147", 7, 23, 754, 4),
+        ("147258369", 11, 23, 754, 5),
+        ("789654123", 2, 24, 754, 6);
         
 -- Populating receipt table
 INSERT INTO receipt 

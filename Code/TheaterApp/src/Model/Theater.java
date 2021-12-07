@@ -17,13 +17,14 @@ public class Theater {
 	 * List of movies playing in the theater along with their show times.
 	 */
 	private HashMap<Movie, ArrayList<Showing>> mySchedule;
-	
+	private String theaterName;
 	/**
 	 * Constructor for theater that initializes data members.
 	 */
-	Theater (String postalCode, HashMap<Movie, ArrayList<Showing>> schedule) {
+	Theater (String postalCode, String name, HashMap<Movie, ArrayList<Showing>> schd) {
 		this.postalCode = postalCode;
-		this.mySchedule = schedule;
+		this.mySchedule = schd;
+		this.theaterName = name;
 	}
 
 	/**
@@ -80,7 +81,7 @@ public class Theater {
 	public String getPostalCode() {
 		return postalCode;
 	}
-
+	public String getTheaterName() {return theaterName;}
 	/**
 	 * Returns the schedule of the theater.
 	 */
