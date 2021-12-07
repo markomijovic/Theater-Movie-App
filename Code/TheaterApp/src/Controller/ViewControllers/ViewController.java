@@ -16,6 +16,18 @@ public class ViewController {
         p.display();
     }
     
+    public void showHomePage() {
+    	HomePage p = new HomePage();
+    	HomepageController q= new HomepageController(p);
+        p.display();
+    }
+    
+    public void showCancelTicketPage() {
+    	CancelTicketPage p = new CancelTicketPage();
+    	CancelTicketController q= new CancelTicketController(p);
+        p.display();
+    }
+    
     public void showLoginPage() {
     	
     	LoginPage p = new LoginPage();
@@ -26,11 +38,12 @@ public class ViewController {
 
     public void showBuyPage(){}
 
-    public void showRegisterPage(){}
+    public void showRegisterPage(){
+    	RegisterPage p = new RegisterPage();
+    	RegisterPageController q= new RegisterPageController(p);
+        p.display();
+    }
     
-    public void showRegUserPage(){};
-    
-    public void showGuestUserPage(){};
 
     class QuitListener implements ActionListener {
         @Override

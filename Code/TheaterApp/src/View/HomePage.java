@@ -12,6 +12,7 @@ public class HomePage extends Page {
     private JButton buyButton;
     private JButton registerButton;
     private JButton loginButton;
+    private JButton cancelButton;
     
     public HomePage() {
         this.setSize(350, 600);
@@ -33,18 +34,23 @@ public class HomePage extends Page {
         registerButton.setBounds(50, 290, 237, 43);
         this.add(registerButton);
         loginButton=new JButton("Login");
-        loginButton.setBounds(50, 340, 237, 43);
+        loginButton.setBounds(50, 390, 237, 43);
         this.add(loginButton);
+        cancelButton=new JButton("Cancel Ticket");
+        cancelButton.setBounds(50, 490, 237, 43);
+        this.add(cancelButton);
     }
 
     public void addButtonActionListener(ActionListener browseListener,
                                   ActionListener buyListener,
                                   ActionListener registerListener,
-                                  ActionListener loginListener) {
+                                  ActionListener loginListener,
+                                  ActionListener cancelListener) {
         browseButton.addActionListener(browseListener);
         buyButton.addActionListener(buyListener);
         registerButton.addActionListener(registerListener);
         loginButton.addActionListener(loginListener);
+        cancelButton.addActionListener(cancelListener);
     }
 
 
