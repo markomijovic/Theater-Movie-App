@@ -33,7 +33,7 @@ public class HomePage extends Page {
         registerButton.setBounds(50, 290, 237, 43);
         this.add(registerButton);
         loginButton=new JButton("Login");
-        loginButton.setBounds(50, 340, 237, 43);
+        loginButton.setBounds(50, 390, 237, 43);
         this.add(loginButton);
     }
 

@@ -23,44 +23,44 @@ public class LoginPage extends Page{
 	public LoginPage() {
 		this.setSize(350, 400);
         this.setLocation(300, 300);
-        //this.setResizable(false);
+        this.setResizable(false);
         this.setLayout(null);
         JLabel title=new JLabel("Login Page");
-        title.setBounds(10, 10, 570, 20);
-        title.setFont(new Font("Ariel", Font.BOLD, 10));
+        title.setBounds(120, 15, 570, 20);
+        title.setFont(new Font("Ariel", Font.BOLD, 20));
         this.add(title);
 
   	//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	
 	usernameLabel = new JLabel("Username");
-	usernameLabel.setBounds(10,20,80,25);
+	usernameLabel.setBounds(10,70,80,25);
 	this.add(usernameLabel);
 	
 	userText = new JTextField(20);
-	userText.setBounds(100,20,165,25);
+	userText.setBounds(100,70,165,25);
 	this.add(userText);
 	
 	
 	passwordLabel = new JLabel("Password");
-	passwordLabel.setBounds(10,50,80,25);
+	passwordLabel.setBounds(10,100,80,25);
 	this.add(passwordLabel);
 	
 	
 	passwordText = new JPasswordField(20);
-	passwordText.setBounds(100,50,165,25);
+	passwordText.setBounds(100,100,165,25);
 	this.add(passwordText);
 	
 	login = new JButton("Registered User Login");
-	login.setBounds(10,80,175,25);
+	login.setBounds(10,130,175,25);
 	this.add(login);
 	
 	
 	guest = new JButton("Continue as Guest");
-	guest.setBounds(180,80,175,25);
+	guest.setBounds(180,130,175,25);
 	this.add(guest);
 	
 	regUserSuccess = new JLabel("");
-	regUserSuccess.setBounds(10,120,200,25);
+	regUserSuccess.setBounds(10,170,200,25);
 	this.add(regUserSuccess);
 	}
 	

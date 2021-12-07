@@ -25,11 +25,12 @@ public class ViewController {
 
     public void showBuyPage(){}
 
-    public void showRegisterPage(){}
+    public void showRegisterPage(){
+    	RegisterPage p = new RegisterPage();
+    	RegisterPageController q= new RegisterPageController(p);
+        p.display();
+    }
     
-    public void showRegUserPage(){};
-    
-    public void showGuestUserPage(){};
 
     class QuitListener implements ActionListener {
         @Override

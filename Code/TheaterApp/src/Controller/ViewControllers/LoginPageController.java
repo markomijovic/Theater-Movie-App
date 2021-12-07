@@ -25,6 +25,7 @@ public class LoginPageController extends ViewController {
 		 
 		boolean x = Boolean.parseBoolean(app.login(username, password)[0]);
 		System.out.println(x);
+		//showBrowsePage();
 		
 		}
 	}
@@ -35,7 +36,7 @@ public class LoginPageController extends ViewController {
 		public void actionPerformed(ActionEvent e) {
 		loginView.setVisible(false);
 		System.out.println("TEST");
-		//showGuestUserPage();
+		//showBrowsePage();
 		}
 	}
 

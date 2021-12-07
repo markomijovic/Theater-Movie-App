@@ -60,7 +60,7 @@ public class TheaterApp {
 		myUserSystem = UserSystem.getInstance();
 		myActiveVouchers = DBLoader.loadActiveVouchers();
 		myMovies = DBLoader.loadMovies(this);
-		myTheaters = DBLoader.loadTheaters(myMovies);
+		myTheaters = DBLoader.loadTheaters();
 	}
 	
 	/** 
