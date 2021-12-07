@@ -12,4 +12,7 @@ public class Page extends JFrame {
 	public void sendMessage(String[] message) {}
 	public void loadModelInfo(String[] pageInput) {}
 
+    public void display() {
+        this.setVisible(true);
+    }
 }

@@ -14,7 +14,7 @@ public class HomePage extends Page {
     private JButton loginButton;
     
     public HomePage() {
-        this.setSize(350, 400);
+        this.setSize(350, 600);
         this.setLocation(300, 300);
         this.setResizable(false);
         this.setLayout(null);
@@ -47,14 +47,7 @@ public class HomePage extends Page {
         loginButton.addActionListener(loginListener);
     }
 
-    public void display() {
-        this.setVisible(true);
-    }
 
-    public static void main(String[] args) {
-        HomePage p = new HomePage();
-        p.display();
-    }
 // 	@Override
 // 	public String[] interactWithUser() {
 // 		String[] result = {"-1"};
