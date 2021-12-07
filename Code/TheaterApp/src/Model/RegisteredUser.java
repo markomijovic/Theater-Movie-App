@@ -25,11 +25,10 @@ public class RegisteredUser extends User{
 	/**
 	 * Constructor initializing all data members.
 	 */
-	RegisteredUser(String username, String password, String name, String address, PaymentInfo myPaymentInfo){
+	RegisteredUser(String username, String password, String name, PaymentInfo myPaymentInfo){
 		this.username = username;
 		this.password = password;
 		this.name = name;
-		this.address = address;
 		this.myPaymentInfo = myPaymentInfo;
 	}
 	
