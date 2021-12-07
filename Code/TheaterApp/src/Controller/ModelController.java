@@ -43,7 +43,12 @@ public class ModelController {
 				}
 				pageId = 0;
 				break;
-			case 2:
+			case 2: //Register
+				break;
+			case 3: //Browse Theater
+				break;
+			case 4: //Cancel ticket
+				break;
 			default: //Homepage
 				pageId = -1;
 				break;

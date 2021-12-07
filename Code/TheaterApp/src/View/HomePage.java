@@ -12,7 +12,7 @@ public class HomePage extends Page {
 		System.out.println("(1) Log in");
 		System.out.println("(2) Register");
 		System.out.println("(3) Browse Theaters");
-		System.out.println("(4) Cancel Ticket");
+		System.out.println("(4) Cancel a Ticket");
 		System.out.println("(5) Quit");
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -22,7 +22,7 @@ public class HomePage extends Page {
             // Reading data using readLine
         	try {
                 option = Integer.parseInt(reader.readLine());
-                if (option < 0 || option > 5)
+                if (option < 0 || option > 4)
                 	option = -1;
         	}
         	catch (Exception e) {
