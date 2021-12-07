@@ -11,7 +11,9 @@ public class ViewController {
 	protected TheaterApp app = new TheaterApp();
 	
     public void showBrowsePage() {
-        System.out.println("clicked browse");
+    	BrowseTheaterPage p = new BrowseTheaterPage();
+    	BrowseController q= new BrowseController(p);
+        p.display();
     }
     
     public void showLoginPage() {
@@ -19,8 +21,7 @@ public class ViewController {
     	LoginPage p = new LoginPage();
     	LoginPageController q= new LoginPageController(p);
         p.display();
-    	
-        //System.out.println("clicked browse");
+  
     }
 
     public void showBuyPage(){}
