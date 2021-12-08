@@ -149,19 +149,4 @@ public class RegisterPage extends Page {
 		register.addActionListener(RegisterListener);
 		back.addActionListener(BackListener);
 	}
-	
-	 public void display() {
-	        this.setVisible(true);
-	 }
-	 
-	 public static void main(String[] args) {
-	        RegisterPage p = new RegisterPage();
-	        p.display();
-	 }
-	
-//	public String[] interactWithUser() {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-
 }

@@ -57,10 +57,4 @@ public class BrowseSeatPage extends Page {
 		buyTicketButton.addActionListener(BuyTicketListener);
 		homepageButton.addActionListener(HomepageListener);
 	}
-	
-	public static void main ( String[] args )
-	{
-		Page m = new BrowseSeatPage();
-		m.display();
-	}
 }

@@ -31,9 +31,6 @@ public class LoginPage extends Page{
         title.setFont(new Font("Ariel", Font.BOLD, 20));
         this.add(title);
 
-        
-  	//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	
 	usernameLabel = new JLabel("Username");
 	usernameLabel.setBounds(10,70,80,25);
 	this.add(usernameLabel);
@@ -71,55 +68,4 @@ public class LoginPage extends Page{
 		back.addActionListener(BackListener);
 		
 	}
-	
-	 public void display() {
-	        this.setVisible(true);
-	 }
-	 
-	 public static void main(String[] args) {
-	        LoginPage p = new LoginPage();
-	        p.display();
-	 }
-	
-	
 }
-
-	
-	
-//	@Override
-//	public String[] interactWithUser() {
-//		boolean attemptLogin = false;
-//		String username = "";
-//		String password = "";
-//
-//    	try {
-//    		System.out.println("Login page, press q at any time to quit");
-//            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-//    		System.out.println("Username: ");
-//            username = reader.readLine();
-//            if (!username.equals("q")) {
-//        		System.out.println("Password: ");
-//                password = reader.readLine(); 
-//                if (!password.equals("q")) { 
-//	        		System.out.println("Attempt Login? [Y/N]");
-//	                String yesOrNo = reader.readLine();
-//	                if (yesOrNo.equals("Y") || yesOrNo.equals("y"))
-//	                	attemptLogin = true;    
-//                }
-//            }
-//    	}
-//    	catch (Exception e) { 	}
-//
-//		return new String[] {Boolean.toString(attemptLogin), username, password};
-//	}
-//
-//	@Override
-//	public void sendMessage(String[] message) {
-//		boolean loginSuccessful = Boolean.parseBoolean(message[0]);
-//
-//		if (loginSuccessful)
-//			System.out.println("Login is successful");
-//		else
-//			System.out.println("Login is NOT successful");
-//	}
-//}

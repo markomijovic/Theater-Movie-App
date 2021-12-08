@@ -57,10 +57,4 @@ public class BrowseMoviePage extends Page {
 		refineBrowseButton.addActionListener(SelectMovieListener);
 		homepageButton.addActionListener(HomepageListener);
 	}
-	
-	public static void main ( String[] args )
-	{
-		Page m = new BrowseMoviePage();
-		m.display();
-	}
 }

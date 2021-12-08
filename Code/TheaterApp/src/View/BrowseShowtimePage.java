@@ -57,10 +57,4 @@ public class BrowseShowtimePage extends Page {
 		refineBrowseButton.addActionListener(SelectShowtimeListener);
 		homepageButton.addActionListener(HomepageListener);
 	}
-	
-	public static void main ( String[] args )
-	{
-		Page m = new BrowseShowtimePage();
-		m.display();
-	}
 }
