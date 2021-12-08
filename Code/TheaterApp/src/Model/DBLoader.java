@@ -15,7 +15,7 @@ public class DBLoader {
 	private final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
 	private final String DB_URL = "jdbc:mysql://localhost:3306/movieapp";
 	private final String USERNAME = "root";
-	private final String PASSWORD = "water";
+	private final String PASSWORD = "ensf608";
 	private Connection conn;
 
 	public DBLoader() {

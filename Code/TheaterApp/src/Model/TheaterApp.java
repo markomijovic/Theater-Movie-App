@@ -99,14 +99,17 @@ public class TheaterApp {
 	 * PROMISES: Returns movie with specified id.
 	 * REQUIRES: Valid movie id.
 	 */
-	private Movie searchMovie(String movieId) {
+	private Movie searchMovie(Theater myTheater, String movieId) {
 		Movie retVal = null;
-		
-		int numMovies = myMovies.size();
-		for (int i = 0; i < numMovies; i++) {
-			if (myMovies.get(i).getTitle().equals(movieId)) {
-				retVal = myMovies.get(i);
-				break;
+
+		if (myTheater != null) {
+			HashMap<Movie, ArrayList<Showing>> movieSched = myTheater.getMySchedule();
+			//Movie myMovie = searchMovie(movieId);
+			for (Movie m : movieSched.keySet()) {
+				if (m.getTitle().equals(movieId)) {
+					retVal = m;
+					break;
+				}
 			}
 		}
 		
@@ -328,18 +331,21 @@ public class TheaterApp {
 		boolean retVal = false;
 
 		Theater myTheater = searchTheater(theaterId);
-		Movie myMovie = searchMovie(movieId);
-		if (myTheater != null && myMovie != null) {
-			Showing myShowing = myTheater.searchShowing(myMovie, showingId);
-			Ticket myTicket = myShowing.searchTicket(ticketId);
+		if (myTheater != null) {
+			Movie myMovie = searchMovie(myTheater, movieId);
 			
-			if (myTicket != null) {
-				if (!myTicket.isSold())
-					retVal = myPaymentSystem.charge(currentUser.getPaymentInfo(), myTicket.getCost());
+			if (myMovie != null) {
+				Showing myShowing = myTheater.searchShowing(myMovie, showingId);
+				Ticket myTicket = myShowing.searchTicket(ticketId);
 				
-				if (retVal) {
-					myTicket.buyTicket();
-					myMessageSystem.sendTicketPurchaseConfirmationEmail(currentUser, myTicket);
+				if (myTicket != null) {
+					if (!myTicket.isSold())
+						retVal = myPaymentSystem.charge(currentUser.getPaymentInfo(), myTicket.getCost());
+					
+					if (retVal) {
+						myTicket.buyTicket();
+						myMessageSystem.sendTicketPurchaseConfirmationEmail(currentUser, myTicket);
+					}
 				}
 			}
 		}
@@ -354,19 +360,22 @@ public class TheaterApp {
 		boolean retVal = false;
 
 		Theater myTheater = searchTheater(theaterId);
-		Movie myMovie = searchMovie(movieId);
-		if (myTheater != null && myMovie != null) {
-			Showing myShowing = myTheater.searchShowing(myMovie, showingId);
-			Ticket myTicket = myShowing.searchTicket(ticketId);
-			
-			if (myTicket != null) {
-				if (myTicket.isSold()) {
-					if (canCancelTicket(myShowing.getShowtime(), new Date())) {
-						myTicket.returnTicket();
-						Voucher myVoucher = issueVoucher(currentUser, myTicket);
-						myMessageSystem.sendTicketRefundConfirmationEmail(currentUser, myTicket, myVoucher);					
+		if (myTheater != null) {
+
+			Movie myMovie = searchMovie(myTheater, movieId);
+			if (myMovie != null) {
+				Showing myShowing = myTheater.searchShowing(myMovie, showingId);
+				Ticket myTicket = myShowing.searchTicket(ticketId);
+				
+				if (myTicket != null) {
+					if (myTicket.isSold()) {
+						if (canCancelTicket(myShowing.getShowtime(), new Date())) {
+							myTicket.returnTicket();
+							Voucher myVoucher = issueVoucher(currentUser, myTicket);
+							myMessageSystem.sendTicketRefundConfirmationEmail(currentUser, myTicket, myVoucher);					
+						}
 					}
-				}
+				}				
 			}
 		}
 		
