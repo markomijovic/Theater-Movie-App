@@ -16,32 +16,58 @@ public class BrowseController extends ViewController {
 	public BrowseShowtimePage showtimeBrowse;
 	public BrowseSeatPage seatBrowse;
 	
-	public BrowseController(BrowseTheaterPage theaterBrowse) {
+	public BrowseController(BrowseTheaterPage theaterBrowse,
+							BrowseMoviePage movieBrowse,
+							BrowseShowtimePage showtimeBrowse,
+							BrowseSeatPage seatBrowse) {
 		this.theaterBrowse = theaterBrowse;
-		//theaterBrowse.addButtonActionListener(new RegUserListener(), new GuestListener());
+		this.movieBrowse = movieBrowse;
+		this.showtimeBrowse = showtimeBrowse;
+		this.seatBrowse = seatBrowse;
+		theaterBrowse.addButtonActionListener(new HomepageListener(), new SelectTheaterListener());
+		movieBrowse.addButtonActionListener(new HomepageListener(), new SelectMovieListener());
+		showtimeBrowse.addButtonActionListener(new HomepageListener(), new SelectShowtimeListener());
+		seatBrowse.addButtonActionListener(new HomepageListener(), new BuyTicketListener());
 	}
 	
-	class RegUserListener implements ActionListener {
+	class HomepageListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-		
-			
-		System.out.println("something");
-		//String username = loginView.userText.getText();
-		 
-		//boolean x = Boolean.parseBoolean(app.login(username, password)[0]);
-		//System.out.println(x);
-		
+			theaterBrowse.setVisible(false);
+			movieBrowse.setVisible(false);
+			showtimeBrowse.setVisible(false);
+			seatBrowse.setVisible(false);
+			System.out.println("Homepage button pressed");
+			showHomePage();
 		}
 	}
-	
-	class GuestListener implements ActionListener {
+	class SelectTheaterListener implements ActionListener {
 		@Override
-		//AppSeting.option="GuestLogin";
 		public void actionPerformed(ActionEvent e) {
-		//loginView.setVisible(false);
-		System.out.println("TEST");
-		//showGuestUserPage();
+			System.out.println("Theater selected");
+		}
+	}
+	class SelectMovieListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.out.println("Movie selected");
+		}
+	}
+	class SelectShowtimeListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.out.println("Showtime selected");
+		}
+	}
+	class BuyTicketListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			seatBrowse.setVisible(false);
+			System.out.println("Seat selected");
+			showBuyPage(theaterBrowse.selectionText.getText(), 
+					    movieBrowse.selectionText.getText(), 
+					    showtimeBrowse.selectionText.getText(), 
+					    seatBrowse.selectionText.getText());
 		}
 	}
 

@@ -1,6 +1,7 @@
 package View;
 
 import java.awt.Font;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -50,6 +51,11 @@ public class BrowseTheaterPage extends Page {
         homepageButton = new JButton("Homepage");
         homepageButton.setBounds(155,300,160,25);
         this.add(homepageButton);
+	}
+
+	public void addButtonActionListener(ActionListener HomepageListener, ActionListener SelectTheaterListener) {
+		refineBrowseButton.addActionListener(SelectTheaterListener);
+		homepageButton.addActionListener(HomepageListener);
 	}
 	
 	public static void main ( String[] args )

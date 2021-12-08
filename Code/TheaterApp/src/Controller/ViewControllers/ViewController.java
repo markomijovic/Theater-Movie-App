@@ -11,9 +11,12 @@ public class ViewController {
 	protected TheaterApp app = new TheaterApp();
 	
     public void showBrowsePage() {
-    	BrowseTheaterPage p = new BrowseTheaterPage();
-    	BrowseController q= new BrowseController(p);
-        p.display();
+    	BrowseTheaterPage theater = new BrowseTheaterPage();
+    	BrowseMoviePage movie = new BrowseMoviePage();
+    	BrowseShowtimePage showtime = new BrowseShowtimePage();
+    	BrowseSeatPage seat = new BrowseSeatPage();
+    	ViewController q= new BrowseController(theater, movie, showtime, seat);
+    	theater.display();
     }
     
     public void showHomePage() {
@@ -36,7 +39,7 @@ public class ViewController {
   
     }
 
-    public void showBuyPage(){}
+    public void showBuyPage(String theaterId, String movieId, String showtimeId, String ticketId){}
 
     public void showRegisterPage(){
     	RegisterPage p = new RegisterPage();
