@@ -15,7 +15,8 @@ public class ViewController {
     	BrowseMoviePage movie = new BrowseMoviePage();
     	BrowseShowtimePage showtime = new BrowseShowtimePage();
     	BrowseSeatPage seat = new BrowseSeatPage();
-    	ViewController q= new BrowseController(theater, movie, showtime, seat);
+    	PaymentPage pay = new PaymentPage();
+    	ViewController q= new BrowseController(theater, movie, showtime, seat, pay);
     	theater.display();
     }
     

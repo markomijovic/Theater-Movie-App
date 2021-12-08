@@ -80,6 +80,20 @@ public class PaymentInfo {
 	}
 
 	/**
+	 * Returns name on card
+	 */
+	public String getNameOnCard() {
+		return nameOnCard;
+	}
+
+	/**
+	 * Returns ccv
+	 */
+	public int getCCV() {
+		return ccv;
+	}
+
+	/**
 	 * Returns expiry year
 	 */
 	public int getExpiryYear() {
