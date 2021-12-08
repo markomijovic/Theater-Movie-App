@@ -22,7 +22,10 @@ public class LoginPageController extends ViewController {
 		String password = loginView.passwordText.getText();
 		boolean x = Boolean.parseBoolean(app.login(username, password)[0]);
 		System.out.println(x);
-		//showBrowsePage();
+		if (x) {
+			loginView.setVisible(false);
+			showBrowsePage();
+		}
 		
 		}
 	}
@@ -33,7 +36,7 @@ public class LoginPageController extends ViewController {
 		public void actionPerformed(ActionEvent e) {
 		loginView.setVisible(false);
 		System.out.println("Guest Button Pressed");
-		//showBrowsePage();
+		showBrowsePage();
 		}
 	}
 	
