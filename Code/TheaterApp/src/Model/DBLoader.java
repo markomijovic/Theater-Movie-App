@@ -233,6 +233,55 @@ public class DBLoader {
 		return new PaymentInfo();
 	}
 
+	/**
+	 * Adds new registered user record
+	 * @return true if added successfully
+	 */
+	public static boolean addRegisteredUser(String username, String password, String name,
+									 String phone, String email, String cardName, String cardNumber,
+									 int cvv, int month, int year) {
+		// Tested. Works as expected.
+		try {
+			Connection conn =DBLoader.getConn();
+			String queryUser = "INSERT INTO reguser(username, fname, lname, phone, email, password) "+
+					"VALUES (?, ?, ?, ?, ?, ?); ";
+			PreparedStatement statementUser = conn.prepareStatement(queryUser);
+			statementUser.setString(1, username);
+			statementUser.setString(2, name.split(" ")[0]);
+			statementUser.setString(3, name.split(" ")[1]);
+			statementUser.setString(4, phone);
+			statementUser.setString(5, email);
+			statementUser.setString(6, password);
+			statementUser.executeUpdate();
+			DBLoader.addPaymentInfo(cardNumber, month, year, cvv, username);
+			return true;
+		} catch(Exception e) {
+			System.out.println(e);
+		}
+		return false;
+	}
+
+	/**
+	 * Adds new paymentInfo record
+	 */
+	public static void addPaymentInfo(String cardNumber, int month, int year, int cvv, String username) {
+		// Tested. Works
+		try {
+			Connection conn =DBLoader.getConn();
+			String query = "INSERT INTO paymentInfo(number, month, year, cvv, username) "+
+					"VALUES (?, ?, ?, ?, ?); ";
+			PreparedStatement statement = conn.prepareStatement(query);
+			statement.setString(1, cardNumber);
+			statement.setInt(2, month);
+			statement.setInt(3, year);
+			statement.setInt(4, cvv);
+			statement.setString(5, username);
+			statement.executeUpdate();
+		} catch(Exception e) {
+			System.out.println(e);
+		}
+	}
+
 	/** Loads the information for all active vouchers from storage
 	 *  Note that a voucher is only valid for one year after its issue date.
 	 *
@@ -247,6 +296,8 @@ public class DBLoader {
 	}
 
 	public static void main(String[] args) throws SQLException {
+//		boolean userAdded = DBLoader.addRegisteredUser("m1", "m123", "m1 m2", "40306316",
+//				"m12@gmail.com", "M1M2", "45551222", 111, 1, 2021);
 //		ArrayList<Theater> ths = DBLoader.loadTheaters();
 //		for (Theater t : ths) {
 //			System.out.println(t.getTheaterName() + ":" + t.getPostalCode() + t.getMySchedule().toString());
