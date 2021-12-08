@@ -43,20 +43,11 @@ public class CancelTicketPage extends Page {
     	this.add(back);
     	
 	}
-    	public void addButtonActionListener(ActionListener CancelListener, ActionListener BackListener) {
-    		cancel.addActionListener(CancelListener);
-    		back.addActionListener(BackListener);
-    		
-    	}
-    	
-    	 public void display() {
-    	        this.setVisible(true);
-    	 }
-    	 
-    	 public static void main(String[] args) {
-    		 CancelTicketPage p = new CancelTicketPage();
-    	        p.display();
-    	 }
-    	
-    	
-    }
+	
+	public void addButtonActionListener(ActionListener CancelListener, ActionListener BackListener) {
+		cancel.addActionListener(CancelListener);
+		back.addActionListener(BackListener);
+		
+	}
+
+}
