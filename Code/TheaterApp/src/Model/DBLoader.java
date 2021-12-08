@@ -237,8 +237,12 @@ public class DBLoader {
 					"VALUES (?, ?, ?, ?, ?, ?); ";
 			PreparedStatement statementUser = conn.prepareStatement(queryUser);
 			statementUser.setString(1, username);
-			statementUser.setString(2, name.split(" ")[0]);
-			statementUser.setString(3, name.split(" ")[1]);
+			String[] givenNames = name.split(" ");
+			statementUser.setString(2, givenNames[0]);
+			if(givenNames.length > 1)
+				statementUser.setString(3, givenNames[1]);
+			else
+				statementUser.setString(3, "");
 			statementUser.setString(4, phone);
 			statementUser.setString(5, email);
 			statementUser.setString(6, password);
