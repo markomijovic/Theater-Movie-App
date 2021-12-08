@@ -289,20 +289,6 @@ public class DBLoader {
 	}
 
 	public static void main(String[] args) throws SQLException {
-//		DBLoader temp = new DBLoader();
-//		boolean userAdded = DBLoader.addRegisteredUser("m1", "m123", "m1 m2", "40306316",
-//				"m12@gmail.com", "M1M2", "45551222", 111, 1, 2021);
 
-
-//		ArrayList<Theater> ths = temp.loadTheaters();
-
-
-//		ArrayList<Movie> ms = temp.loadMovies(new TheaterApp());
-//		for (Movie m : ms) {System.out.println(m.getTitle());}
-//
-//		ArrayList<RegisteredUser> users =temp.loadUsers();
-//		for (RegisteredUser u : users) {
-//			System.out.println(u.getPaymentInfo().getCreditCardNumber());
-//		}
 	}
 }
