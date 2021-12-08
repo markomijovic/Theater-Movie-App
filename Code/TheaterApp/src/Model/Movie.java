@@ -33,8 +33,8 @@ public class Movie {
 	 */
 	Movie(String title, String movieNews, TheaterApp myObserver, int sID) {
 		this.title = title;
-		setMovieNews(movieNews);
 		this.myObserver = myObserver;
+		setMovieNews(movieNews);
 		showingListID = sID;
 	}
 	
@@ -63,6 +63,6 @@ public class Movie {
 	public void setMovieNews(String news) {
 		// Observer Pattern: When news are updated, all registered users are notified.
 		movieNews = news;
-		//myObserver.sendExclusiveMovieNews(news);
+		myObserver.sendExclusiveMovieNews(news);
 	}
 }

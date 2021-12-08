@@ -15,7 +15,7 @@ public class DBLoader {
 	private final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
 	private final String DB_URL = "jdbc:mysql://localhost:3306/movieapp";
 	private final String USERNAME = "root";
-	private final String PASSWORD = "ensf608";
+	private final String PASSWORD = "water";
 	private Connection conn;
 
 	public DBLoader() {
@@ -33,7 +33,7 @@ public class DBLoader {
 		// Tested. Confirmed it works.
 		ArrayList<Theater> myTheaters = new ArrayList<>();
 		try {
-			String query = "SELECT theaterName, postalCode, movieListID FROM theater;";
+			String query = "SELECT theaterName, postalCode FROM theater;";
 			PreparedStatement statement = conn.prepareStatement(query);
 			ResultSet res = statement.executeQuery();
 			if (res != null) {
@@ -41,7 +41,6 @@ public class DBLoader {
 					HashMap<Movie, ArrayList<Showing>> theater_schedule = new HashMap<>();
 					String tName = res.getString(1);
 					String pCode = res.getString(2);
-					int movielistid = res.getInt(3);
 					ArrayList<Movie> tMovies = loadMovies(myObserver, tName);
 					for (Movie movie : tMovies) {
 						ArrayList<Showing> movie_showings = loadShowings(movie);
@@ -86,10 +85,8 @@ public class DBLoader {
 		// Tested. Works as expected
 		ArrayList<Movie> myMovies = new ArrayList<>();
 		try {
-			String query = String.format("SELECT M.movieName, exclusiveNews, showtimeListID FROM "+
-					"theater as T join movielist as ML on T.movieListID = ML.id "+
-					"join movie as M on ML.movieName = M.movieName "+
-					"WHERE T.theaterName=?;");
+			String query = String.format("SELECT movieName, exclusiveNews, showtimeListID FROM movie "+
+					"WHERE  theaterName=?;");
 			PreparedStatement statement = conn.prepareStatement(query);
 			statement.setString(1, theater_name);
 			ResultSet res = statement.executeQuery();
@@ -237,12 +234,8 @@ public class DBLoader {
 					"VALUES (?, ?, ?, ?, ?, ?); ";
 			PreparedStatement statementUser = conn.prepareStatement(queryUser);
 			statementUser.setString(1, username);
-			String[] givenNames = name.split(" ");
-			statementUser.setString(2, givenNames[0]);
-			if(givenNames.length > 1)
-				statementUser.setString(3, givenNames[1]);
-			else
-				statementUser.setString(3, "");
+			statementUser.setString(2, name.split(" ")[0]);
+			statementUser.setString(3, name.split(" ")[1]);
 			statementUser.setString(4, phone);
 			statementUser.setString(5, email);
 			statementUser.setString(6, password);
@@ -275,6 +268,42 @@ public class DBLoader {
 		}
 	}
 
+	/**
+	 * Adds purchased ticket to a database
+	 * @param ticket Ticket reference
+	 */
+	public void addTicket(Ticket ticket) {
+		try {
+			String query = "INSERT INTO ticket(id, ticketStatus, seatRow, seatCol, cost) "+
+					"VALUES (?, ?, ?, ?, ?)";
+			PreparedStatement statement = conn.prepareStatement(query);
+			statement.setInt(1, Integer.valueOf(ticket.getId()));
+			statement.setBoolean(2, true);
+			statement.setInt(3, ticket.getRow());
+			statement.setInt(4, ticket.getCol());
+			statement.setDouble(5, ticket.getCost());
+			statement.executeUpdate();
+		} catch(Exception e) {
+			System.out.println(e);
+		}
+	}
+
+	/**
+	 * Removes ticket from database
+	 * @param id ticket id
+	 */
+	public void cancelTicket(int id) {
+		System.out.println(id);
+		try {
+			String query = "DELETE FROM ticket WHERE id=?";
+			PreparedStatement statement = conn.prepareStatement(query);
+			statement.setInt(1, id);
+			statement.executeUpdate();
+		} catch(Exception e) {
+			System.out.println(e);
+		}
+	}
+
 	/** Loads the information for all active vouchers from storage
 	 *  Note that a voucher is only valid for one year after its issue date.
 	 *
@@ -289,6 +318,20 @@ public class DBLoader {
 	}
 
 	public static void main(String[] args) throws SQLException {
+//		DBLoader temp = new DBLoader();
+//		boolean userAdded = DBLoader.addRegisteredUser("m1", "m123", "m1 m2", "40306316",
+//				"m12@gmail.com", "M1M2", "45551222", 111, 1, 2021);
 
+
+//		ArrayList<Theater> ths = temp.loadTheaters();
+
+
+//		ArrayList<Movie> ms = temp.loadMovies(new TheaterApp());
+//		for (Movie m : ms) {System.out.println(m.getTitle());}
+//
+//		ArrayList<RegisteredUser> users =temp.loadUsers();
+//		for (RegisteredUser u : users) {
+//			System.out.println(u.getPaymentInfo().getCreditCardNumber());
+//		}
 	}
 }

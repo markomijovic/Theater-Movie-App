@@ -8,7 +8,7 @@ import View.*;
 
 public class ViewController {
 	
-	protected TheaterApp app = TheaterApp.getInstance();
+	public TheaterApp app = TheaterApp.getInstance();
 
     public void showBrowsePage() {
     	BrowseTheaterPage theater = new BrowseTheaterPage();
@@ -40,14 +40,11 @@ public class ViewController {
   
     }
 
-    public void showBuyPage(String theaterId, String movieId, String showtimeId, String ticketId){}
-
     public void showRegisterPage(){
     	RegisterPage p = new RegisterPage();
     	RegisterPageController q= new RegisterPageController(p);
         p.display();
     }
-
 
     class QuitListener implements ActionListener {
         @Override

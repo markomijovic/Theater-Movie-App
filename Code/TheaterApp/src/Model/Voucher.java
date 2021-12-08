@@ -28,7 +28,9 @@ public class Voucher {
 	 */
 	Voucher(Date issueDate, double refundValue, int id) {
 		this.issueDate = issueDate;
-		this.expiryDate = new Date(issueDate.getDay(), issueDate.getMonth(), issueDate.getYear() + 1);
+		long currentDateTime = System.currentTimeMillis();
+		long year = Long.valueOf("31500000000");
+		this.expiryDate = new Date(currentDateTime+year);
 		this.refundValue = refundValue;
 		this.id = id;
 	}

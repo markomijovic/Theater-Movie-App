@@ -159,10 +159,10 @@ public class TheaterApp {
 	 */
 	private boolean canCancelTicket(Timestamp timestamp, Date cancellationDate) {
 		boolean retVal = false;
-		
-		if ((timestamp.getTime() - cancellationDate.getTime()) / 3600000.0 <= 72.0)
+
+		if ((timestamp.getTime() - cancellationDate.getTime()) / 3600000.0 > 72.0)
 			retVal = true;
-		
+
 		return retVal;
 	}
 	
@@ -233,7 +233,9 @@ public class TheaterApp {
 				if (myShowing != null) {
 					ArrayList<Ticket> myTickets = myShowing.getMyTickets();
 					for (Ticket t : myTickets) {
-						res[t.getRow()-1][t.getCol()-1] = "S";
+						if (t.isSold()) {
+							res[t.getRow()-1][t.getCol()-1] = "S";
+						}
 					}
 				}				
 			}
@@ -294,7 +296,7 @@ public class TheaterApp {
 	/**
 	 * Buys ticket at a specific theater, for a specific movie, at a specific showing, at a specific seat.
 	 */
-	public String[] buyTicket(String theaterId, String movieId, String showingId, String ticketId) {
+	public String[] buyTicket(String theaterId, String movieId, String showingId, int row, int col, PaymentInfo paymentInfo) {
 		boolean retVal = false;
 
 		Theater myTheater = searchTheater(theaterId);
@@ -303,20 +305,26 @@ public class TheaterApp {
 			
 			if (myMovie != null) {
 				Showing myShowing = myTheater.searchShowing(myMovie, showingId);
-				Ticket myTicket = myShowing.searchTicket(ticketId);
-				
-				if (myTicket != null) {
-					if (!myTicket.isSold())
-						retVal = myPaymentSystem.charge(currentUser.getPaymentInfo(), myTicket.getCost());
-					
-					if (retVal) {
-						myTicket.buyTicket();
-						myMessageSystem.sendTicketPurchaseConfirmationEmail(currentUser, myTicket);
+				if (myShowing != null) {
+					ArrayList<Ticket> showingTickets = myShowing.getMyTickets();
+					int last_id = -1;
+					// check ticket seat not taken
+					for (Ticket t : showingTickets) {
+						last_id = Integer.valueOf(t.getId())+1;
+						if (t.getRow() == row && t.getCol() == col) {
+							return new String[] {Boolean.toString(retVal)};
+						}
 					}
+					Ticket newTicket = new Ticket(String.valueOf(last_id), 12.5, true, row, col);
+					// charge user ticket cost
+					if (myPaymentSystem.charge(paymentInfo, newTicket.getCost())) {
+						myMessageSystem.sendTicketPurchaseConfirmationEmail(currentUser, newTicket);
+						showingTickets.add(newTicket);
+						loader.addTicket(newTicket);
+					};
 				}
 			}
 		}
-
 		return new String[] {Boolean.toString(retVal)};
 	}
 
@@ -335,12 +343,11 @@ public class TheaterApp {
 				Ticket myTicket = myShowing.searchTicket(ticketId);
 				
 				if (myTicket != null) {
-					if (myTicket.isSold()) {
 						if (canCancelTicket(myShowing.getShowtime(), new Date())) {
 							myTicket.returnTicket();
 							Voucher myVoucher = issueVoucher(currentUser, myTicket);
-							myMessageSystem.sendTicketRefundConfirmationEmail(currentUser, myTicket, myVoucher);					
-						}
+							myMessageSystem.sendTicketRefundConfirmationEmail(currentUser, myTicket, myVoucher);
+							loader.cancelTicket(Integer.valueOf(ticketId));
 					}
 				}				
 			}
@@ -355,5 +362,17 @@ public class TheaterApp {
 	public void sendExclusiveMovieNews(String news) {
 		myMessageSystem.sendExclusiveMovieNewsEmail(myUserSystem.getMyUsers(), news);
 
+	}
+
+	/**
+	 * Returns Registered users payment info
+	 * @return payment info object
+	 */
+	public PaymentInfo getPaymentInfo() {
+		if (currentUser instanceof RegisteredUser) {
+			return currentUser.getPaymentInfo();
+		} else {
+			return null;
+		}
 	}
 }

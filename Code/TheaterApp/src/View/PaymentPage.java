@@ -31,7 +31,7 @@ public class PaymentPage extends Page {
         this.setLocation(300, 300);
         this.setResizable(false);
         this.setLayout(null);
-        JLabel title=new JLabel("Register Page");
+        JLabel title=new JLabel("Payment Page");
         title.setBounds(120, 15, 570, 20);
         title.setFont(new Font("Ariel", Font.BOLD, 20));
         this.add(title);

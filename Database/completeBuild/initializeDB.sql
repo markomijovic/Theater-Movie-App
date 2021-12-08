@@ -7,16 +7,15 @@ DROP TABLE IF EXISTS theater;
 CREATE TABLE theater (
 theaterName         varchar(100) not null,
 postalCode 		    varchar(10) not null,
-movieListID	 		integer,
 
 primary key (theaterName)
 );
 
 DROP TABLE IF EXISTS movieList;
 CREATE TABLE movieList (
-  id  		  	integer not null,
+  theaterName    varchar(100) not null,
   movieName      varchar(50),
-  primary key(movieName, id)
+  primary key(movieName, theaterName)
 );
 
 DROP TABLE IF EXISTS movie;
@@ -24,7 +23,8 @@ CREATE TABLE movie (
   movieName 		  varchar(100) not null,
   exclusiveNews        varchar(100),
   showtimeListID				integer not null,
-  primary key (movieName)
+  theaterName      varchar(100) not null,
+  primary key (movieName, theaterName)
 );
 
 

@@ -14,8 +14,8 @@ public class MessageSystem {
 	 */
 	private void sendEmail (String email, String message) {
 		// To be implemented...
-		System.out.println("Email sent to user with address \"" + email + "\"");
-		System.out.println("Message sent:");
+		System.out.println("Email sent to user with email:  \"" + email + "\"");
+		System.out.println("Message sent: ");
 		System.out.println(message);
 	}
 

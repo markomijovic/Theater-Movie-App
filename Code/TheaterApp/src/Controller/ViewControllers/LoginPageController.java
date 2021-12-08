@@ -24,7 +24,7 @@ public class LoginPageController extends ViewController {
 		System.out.println(x);
 		if (x) {
 			loginView.setVisible(false);
-			showBrowsePage();
+			showHomePage();
 		}
 		
 		}

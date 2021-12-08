@@ -12,13 +12,14 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 
 public class BrowseSeatPage extends Page {
-	public  JTextField selectionText;
-	public  JButton buyTicketButton;
-	public  JButton homepageButton;
-	public JTextArea displayArea;
-	
-	public BrowseSeatPage() {
-		this.setSize(470, 400);
+    public JTextField rowText;
+    public JTextField columnText;
+    public JButton buyTicketButton;
+    public JButton homepageButton;
+    public JTextArea displayArea;
+
+    public BrowseSeatPage() {
+        this.setSize(470, 400);
         this.setLocation(300, 300);
         this.setResizable(false);
         this.setLayout(null);
@@ -27,14 +28,22 @@ public class BrowseSeatPage extends Page {
         title.setFont(new Font("Ariel", Font.BOLD, 20));
         this.add(title);
 
-        JLabel selectionPromptLabel = new JLabel("Seat Id: ");
-        selectionPromptLabel.setBounds(10,70,80,25);
-        this.add(selectionPromptLabel);
-	
-        selectionText = new JTextField(20);
-        selectionText.setBounds(100,70,165,25);
-        this.add(selectionText);
-	
+        JLabel rowLabel = new JLabel("Seat Row: ");
+        rowLabel.setBounds(10,70,80,25);
+        this.add(rowLabel);
+
+        rowText = new JTextField(20);
+        rowText.setBounds(100,70,165,25);
+        this.add(rowText);
+
+        JLabel columnLabel = new JLabel("Seat Col: ");
+        columnLabel.setBounds(10,90,80,25);
+        this.add(columnLabel);
+
+        columnText = new JTextField(20);
+        columnText.setBounds(100,90,165,25);
+        this.add(columnText);
+
         buyTicketButton = new JButton("Buy Ticket");
         buyTicketButton.setBounds(275,70,160,25);
         this.add(buyTicketButton);
@@ -51,10 +60,10 @@ public class BrowseSeatPage extends Page {
         homepageButton = new JButton("Homepage");
         homepageButton.setBounds(155,300,160,25);
         this.add(homepageButton);
-	}
+    }
 
-	public void addButtonActionListener(ActionListener HomepageListener, ActionListener BuyTicketListener) {
-		buyTicketButton.addActionListener(BuyTicketListener);
-		homepageButton.addActionListener(HomepageListener);
-	}
+    public void addButtonActionListener(ActionListener HomepageListener, ActionListener BuyTicketListener) {
+        buyTicketButton.addActionListener(BuyTicketListener);
+        homepageButton.addActionListener(HomepageListener);
+    }
 }

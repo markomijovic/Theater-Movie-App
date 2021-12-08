@@ -25,6 +25,7 @@ public class CancelTicketController extends ViewController {
 						 theView.movieIDText.getText(), 
 						 theView.showtimeIDText.getText(), 
 						 theView.ticketIDText.getText());
+		showHomePage();
 		}
 	}
 	

@@ -2,87 +2,82 @@ USE movieapp;
 
 -- Populating theater table
 INSERT INTO theater
-VALUES	("Chinook Cineplex", "T3F9L0", 1), 
-		("Crowfoot Cineplex", "T2TT32",2), 
-		("CrossIron Cineplex", "TG3V21",1), 
-        ("Landmark Cineplex", "T1G3G3", 3);
-        
--- Populating movieList table
-INSERT INTO movieList
-VALUES	(1,"NoTimeToDie"),
-		(1,"Dune"),
-        (1,"MatrixResurrections"),
-		(2,"Dune"),
-        (2,"MatrixResurrections"),
-		(3,"NoTimeToDie"),
-        (3,"Eternals");
+VALUES	("Chinook Cineplex", "T3F9L0"), 
+		("Crowfoot Cineplex", "T2TT32");
+
         
  -- Populating movie table      
 INSERT INTO movie 
-VALUES	("NoTimeToDie", "Member get free popcorn",1), 
-		("MatrixResurrections","Member get free popcorn",1), 
-		("Dune","Follow on IG for discount",2), 
-        ("Eternals","Movie Giveaway!",2);     
+VALUES	("NoTimeToDie", "Member get free popcorn",11, "Chinook Cineplex"), 
+		("Dune","Follow on IG for discount",12, "Chinook Cineplex"), 
+		("MatrixResurrections","Member get free popcorn",13, "Chinook Cineplex"), 
+        ("Dune","Follow on IG for discount",21, "Crowfoot Cineplex"), 
+		("Eternals","Member get free popcorn",22, "Crowfoot Cineplex");
 
 -- Populating showtimeList table
 INSERT INTO showtimeList
-VALUES	(1,1),
-		(1,2),
-		(1,3),
-        (1,4),
-        (1,5),
-        (2,1),
-        (2,2),
-        (2,3),
-        (2,4);
+VALUES	(11,11),
+		(11,12),
+		(11,13),
+        (12, 21),
+        (12, 22),
+        (13, 31),
+        (21, 111),
+        (21, 112),
+        (22, 121),
+        (22, 122);
 
         
 -- Populating showtime table         
 INSERT INTO showtime 
-VALUES	(1, "2021-12-15T14:00:00",5,5,1),
-		(2, "2021-12-15T16:00:00",5,5,2),
-        (3, "2021-12-16T14:00:00",5,5,3),
-        (5, "2021-12-18T20:30:00",5,5,4);
+VALUES	(11, "2021-12-08T14:00:00",5,5,11),
+		(12, "2021-12-15T16:00:00",5,5,12),
+		(13, "2021-12-17T14:00:00",5,5,13),
+		(21, "2021-12-18T20:00:00",5,5,21),
+		(22, "2021-12-08T22:00:00",5,5,22),
+		(31, "2021-12-20T15:00:00",5,5,31),
+        (111, "2021-12-15T16:00:00",5,5,111),
+		(112, "2021-12-17T13:00:00",5,5,112),
+        (121, "2021-12-16T15:40:00",5,5,121),
+        (122, "2021-12-18T20:30:00",5,5,122);
        
 -- Populating ticketList table
 INSERT INTO ticketList
-VALUES	(1,1),
-		(1,2),
-		(1,3),
-        (1,4),
-        (1,5),
-        (2,6),
-        (2,7),
-        (2,8),
-        (2,9),
-        (2,10),
-        (2,11),
-        (3,12),
-        (3,13),
-        (4,14),
-        (4,15),
-        (4,16),
-        (4,17);
+VALUES	(11,11),
+		(11,12),
+		(12,51),
+        (12,52),
+		(13,81),
+        (13,82),
+        (21,101),
+        (21,102),
+        (22,121),
+        (31,151),
+        (31, 152),
+        (111,181),
+        (112,201),
+        (112,202),
+        (122,221),
+        (122,222);
 
 -- Populating ticket table
 INSERT INTO ticket 
-VALUES	(1,True, 1, 1, 12.50),
-		(2,True, 1, 2, 12.50),
-        (3,True, 1, 3, 12.50),
-        (4,True, 2, 4, 12.50),
-        (5,True, 3, 5, 12.50),
-        (6,True, 1, 5, 12.50),
-        (7,True, 2, 3, 12.50),
-        (8,True, 3, 2, 12.50),
-        (9,True, 4, 1, 12.50),
-        (10,True, 4, 2, 12.50),
-        (11,True, 2, 5, 12.50),
-        (12,True, 1, 5, 10),
-        (13,True, 3, 2, 9),
-        (14,True, 1, 2, 10),
-        (15,True, 2, 3, 10),
-        (16,True, 3, 4, 10),
-        (17,True, 4, 5, 10);
+VALUES	(11,True, 1, 1, 12.50),
+		(12,True, 1, 2, 12.50),
+        (51,True, 1, 3, 12.50),
+        (52,True, 2, 4, 12.50),
+        (81,True, 3, 5, 12.50),
+        (82,True, 1, 5, 12.50),
+        (101,True, 2, 3, 12.50),
+        (102,True, 3, 2, 12.50),
+        (121,True, 4, 1, 12.50),
+        (151,True, 4, 2, 12.50),
+        (152,True, 2, 5, 12.50),
+        (181,True, 1, 5, 10),
+        (201,True, 3, 2, 9),
+        (202,True, 1, 2, 10),
+        (221,True, 2, 3, 10),
+        (222,True, 3, 4, 10);
 	  
 
 -- Populating regUser table

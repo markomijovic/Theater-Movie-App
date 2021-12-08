@@ -28,6 +28,7 @@ public class RegisterPageController extends ViewController {
 			int month = Integer.valueOf(theView.expiryMonthText.getText());
 			int year = Integer.valueOf(theView.expiryYearText.getText());
 			app.register(username, password, name, phone, email, nameOnCard, cardNumberText, cvv, month, year);
+			showHomePage();
 		}
 	}
 	

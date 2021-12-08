@@ -9,6 +9,7 @@ import javax.swing.JTextField;
 
 import Model.PaymentInfo;
 import Model.Showing;
+import Model.Theater;
 import View.BrowseMoviePage;
 import View.BrowseSeatPage;
 import View.BrowseShowtimePage;
@@ -35,7 +36,11 @@ public class BrowseController extends ViewController {
 		this.seatBrowse = seatBrowse;
 		this.paymentPage = paymentPage;
 		String[] myListOfTheaters = app.getTheaters();
-		theaterBrowse.displayArea.setText(myListOfTheaters[0]);
+		String res = "";
+		for (String s : myListOfTheaters) {
+			res += s + "\n" + "-----------" + "\n\n";
+		}
+		theaterBrowse.displayArea.setText(res);
 		theaterBrowse.setVisible(true);
 		theaterBrowse.addButtonActionListener(new HomepageListener(), new SelectTheaterListener());
 		movieBrowse.addButtonActionListener(new HomepageListener(), new SelectMovieListener());
@@ -127,11 +132,18 @@ public class BrowseController extends ViewController {
 		public void actionPerformed(ActionEvent e) {
 			showtimeBrowse.setVisible(false);
 			System.out.println("Seat selected");
-			app.buyTicket(theaterBrowse.selectionText.getText(), 
-					    movieBrowse.selectionText.getText(), 
-					    showtimeBrowse.selectionText.getText(), 
-					    seatBrowse.selectionText.getText(), myPaymentInfo);
+			app.buyTicket(theaterBrowse.selectionText.getText(),
+					movieBrowse.selectionText.getText(),
+					showtimeBrowse.selectionText.getText(),
+					Integer.valueOf(seatBrowse.rowText.getText()),
+					Integer.valueOf(seatBrowse.columnText.getText()),
+					new PaymentInfo(paymentPage.emailText.getText(),
+							paymentPage.nameOnCardText.getText(),
+							Integer.valueOf(paymentPage.cardNumberText.getText()),
+							Integer.valueOf(paymentPage.cvvText.getText()),
+							Integer.valueOf(paymentPage.expiryMonthText.getText()),
+							Integer.valueOf(paymentPage.expiryYearText.getText())));
+//			seatBrowse.selectionText.getText(), myPaymentInfo);
 		}
 	}
-
 }

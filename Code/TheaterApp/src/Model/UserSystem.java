@@ -85,6 +85,7 @@ public class UserSystem {
 		PaymentInfo newInfo = new PaymentInfo(email, name, Integer.parseInt(cardNumber), cvv, month, year);
 		if (searchUser(username) == null) {
 			retVal = new RegisteredUser(username, password, name, newInfo);
+			myUsers.add(retVal);
 			loader.addRegisteredUser(username, password, name, phone, email, cardName, cardNumber, cvv, month, year);
 		}
 		return retVal;

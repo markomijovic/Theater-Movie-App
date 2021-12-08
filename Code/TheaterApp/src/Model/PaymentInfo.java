@@ -44,7 +44,7 @@ public class PaymentInfo {
 	/**
 	 * Constructor for a valid payment information object.
 	 */
-	PaymentInfo( String email,
+	public PaymentInfo( String email,
 				 String nameOnCard,
 				 int creditCardNumber,
 				 int ccv,
