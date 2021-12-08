@@ -65,11 +65,11 @@ public class CancelTicketPage extends Page {
     	this.add(ticketIDText);
     	
     	cancel = new JButton("Confirm Cancellation");
-    	cancel.setBounds(85,130,200,25);
+    	cancel.setBounds(85,230,200,25);
     	this.add(cancel);
     	
     	back = new JButton("Back");
-    	back.setBounds(85,200,250,25);
+    	back.setBounds(85,260,200,25);
     	this.add(back);
     	
 	}
