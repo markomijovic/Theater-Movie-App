@@ -221,29 +221,21 @@ public class TheaterApp {
 	 * Get list of seats for a specific showing.
 	 */
 	public String[][] getSeats(String theaterId, String movieId, String showingId) {
-		ArrayList<String> retVal = new ArrayList<>();
+		String[][] res = new String[5][5];
+		for (String [] row : res) {Arrays.fill(row, "A");}
 		
 		Theater myTheater = searchTheater(theaterId);
-		Movie myMovie = null;
 		if (myTheater != null) {
-			HashMap<Movie, ArrayList<Showing>> movieSched = myTheater.getMySchedule();
-			//Movie myMovie = searchMovie(movieId);
-			for (Movie m : movieSched.keySet()) {
-				if (m.getTitle().equals(movieId)) {
-					myMovie = m;
-					break;
-				}
-			}
-		}
-		String[][] res = new String[5][5];
-		for (String [] row : res) {Arrays.fill(row, "A");} // # = available
-		if (myTheater != null && myMovie != null) {
-			Showing myShowing = myTheater.searchShowing(myMovie, showingId);
-			if (myShowing != null) {
-				ArrayList<Ticket> myTickets = myShowing.getMyTickets();
-				for (Ticket t : myTickets) {
-					res[t.getRow()-1][t.getCol()-1] = "S";
-				}
+			Movie myMovie = searchMovie(myTheater, movieId);
+			
+			if (myMovie != null) {
+				Showing myShowing = myTheater.searchShowing(myMovie, showingId);
+				if (myShowing != null) {
+					ArrayList<Ticket> myTickets = myShowing.getMyTickets();
+					for (Ticket t : myTickets) {
+						res[t.getRow()-1][t.getCol()-1] = "S";
+					}
+				}				
 			}
 		}
 		return res;
@@ -273,31 +265,6 @@ public class TheaterApp {
 	public String[] logout() {
 		currentUser = new OrdinaryUser();
 		return new String[] {Boolean.toString(true)};
-	}
-	
-	/**
-	 * Attempts to enter the payment information for the current user.
-	 */
-	public String[] enterPaymentInfo(String email,
-								 String nameOnCard,
-								 int creditCardNumber,
-								 int ccv,
-								 int expiryMonth,
-								 int expiryYear) {
-		boolean retVal = false;
-		
-		PaymentInfo myPaymentInfo = new PaymentInfo( email,
-													 nameOnCard,
-													 creditCardNumber,
-													 ccv,
-													 expiryMonth,
-													 expiryYear );
-		retVal = myPaymentSystem.validPaymentInfo(myPaymentInfo);
-		
-		if (retVal)
-			currentUser.setPaymentInfo(myPaymentInfo);
-		
-		return new String[] {Boolean.toString(retVal)};
 	}
 	
 	/**
