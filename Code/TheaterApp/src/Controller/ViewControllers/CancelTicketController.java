@@ -21,7 +21,10 @@ public class CancelTicketController extends ViewController {
 		public void actionPerformed(ActionEvent e) {
 		theView.setVisible(false);
 		System.out.println("Cancel Button Pressed");
-		//Cancel the ticket from DB
+		app.cancelTicket(theView.theaterIDText.getText(), 
+						 theView.movieIDText.getText(), 
+						 theView.showtimeIDText.getText(), 
+						 theView.ticketIDText.getText());
 		}
 	}
 	
