@@ -16,7 +16,6 @@ public class BrowseController extends ViewController {
 	public BrowseShowtimePage showtimeBrowse;
 	public BrowseSeatPage seatBrowse;
 	
-	//public TheaterApp theaterApp;
 	public BrowseController(BrowseTheaterPage theaterBrowse) {
 		this.theaterBrowse = theaterBrowse;
 		//theaterBrowse.addButtonActionListener(new RegUserListener(), new GuestListener());
