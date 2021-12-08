@@ -11,7 +11,7 @@ public class LoginPageController extends ViewController {
 	//public TheaterApp theaterApp;
 	public LoginPageController(LoginPage loginView) {
 		this.loginView = loginView;
-		loginView.addButtonActionListener(new RegUserListener(), new GuestListener(), new BackListener());
+		loginView.addButtonActionListener(new RegUserListener(), new BackListener());
 	}
 	
 	class RegUserListener implements ActionListener {
@@ -27,16 +27,6 @@ public class LoginPageController extends ViewController {
 			showBrowsePage();
 		}
 		
-		}
-	}
-	
-	class GuestListener implements ActionListener {
-		@Override
-		//AppSeting.option="GuestLogin";
-		public void actionPerformed(ActionEvent e) {
-		loginView.setVisible(false);
-		System.out.println("Guest Button Pressed");
-		showBrowsePage();
 		}
 	}
 	

@@ -17,7 +17,6 @@ public class LoginPage extends Page{
 	private  JLabel passwordLabel;
 	public  JPasswordField passwordText;
 	public  JButton login;
-	private  JButton guest;
 	public  JLabel regUserSuccess;
 	private  JButton back;
 	
@@ -28,7 +27,7 @@ public class LoginPage extends Page{
         this.setResizable(false);
         this.setLayout(null);
         JLabel title=new JLabel("Login Page");
-        title.setBounds(120, 15, 570, 20);
+        title.setBounds(120, 15, 570, 30);
         title.setFont(new Font("Ariel", Font.BOLD, 20));
         this.add(title);
 
@@ -53,17 +52,12 @@ public class LoginPage extends Page{
 	passwordText.setBounds(100,100,165,25);
 	this.add(passwordText);
 	
-	login = new JButton("Registered User Login");
-	login.setBounds(10,130,175,25);
+	login = new JButton("Login");
+	login.setBounds(85,240,175,25);
 	this.add(login);
 	
-	
-	guest = new JButton("Continue as Guest");
-	guest.setBounds(180,130,175,25);
-	this.add(guest);
-	
-	back = new JButton("Back");
-	back.setBounds(85,160,175,25);
+	back = new JButton("Homepage");
+	back.setBounds(85,280,175,25);
 	this.add(back);
 	
 	regUserSuccess = new JLabel("");
@@ -72,9 +66,8 @@ public class LoginPage extends Page{
 	}
 	
 	
-	public void addButtonActionListener(ActionListener RegUserListener, ActionListener GuestListener, ActionListener BackListener) {
+	public void addButtonActionListener(ActionListener RegUserListener, ActionListener BackListener) {
 		login.addActionListener(RegUserListener);
-		guest.addActionListener(GuestListener);
 		back.addActionListener(BackListener);
 		
 	}
