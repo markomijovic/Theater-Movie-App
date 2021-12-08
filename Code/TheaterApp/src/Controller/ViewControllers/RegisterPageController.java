@@ -16,8 +16,18 @@ public class RegisterPageController extends ViewController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			System.out.println("Register Button working");
-			 theView.setVisible(false);
-			//showBrowsePage();
+			theView.setVisible(false);
+			String username = theView.userText.getText();
+			String password = theView.passwordText.getText();
+			String name = theView.nameText.getText();
+			String phone = theView.phoneText.getText();
+			String email = theView.emailText.getText();
+			String nameOnCard = theView.nameOnCardText.getText();
+			String cardNumberText = theView.cardNumberText.getText();
+			int cvv = Integer.valueOf(theView.cvvText.getText());
+			int month = Integer.valueOf(theView.expiryMonthText.getText());
+			int year = Integer.valueOf(theView.expiryYearText.getText());
+			app.register(username, password, name, phone, email, nameOnCard, cardNumberText, cvv, month, year);
 		}
 	}
 	

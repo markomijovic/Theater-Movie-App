@@ -1,10 +1,7 @@
 package Model;
 
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.Map;
+import java.util.*;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 
 /**
  * This is the main class for the back-end. It runs all operations.
@@ -45,7 +42,9 @@ public class TheaterApp {
 	 * User currently using the app, by default this is an ordinary user.
 	 */
 	private User currentUser;
-	
+	public DBLoader loader;
+	private static TheaterApp myInstance = null;
+
 	/**
 	 * Default constructor for the app is a Factory method.
 	 * An ordinary user is instantiated by default. 
@@ -54,16 +53,26 @@ public class TheaterApp {
 	 * Payment system is instantiated.
 	 * Theater and Movie information is loaded from the database.
 	 */
-	public TheaterApp() {
+	private TheaterApp() {
+		loader = new DBLoader();
 		currentUser = new OrdinaryUser();
 		myMessageSystem = new MessageSystem();
 		myPaymentSystem = new PaymentSystem();
-		myUserSystem = UserSystem.getInstance();
-		myActiveVouchers = DBLoader.loadActiveVouchers();
-		myMovies = DBLoader.loadMovies(this);
-		myTheaters = DBLoader.loadTheaters();
+		myUserSystem = UserSystem.getInstance(loader);
+		myActiveVouchers = loader.loadActiveVouchers();
+		myMovies = loader.loadMovies(this);
+		myTheaters = loader.loadTheaters(this);
 	}
-	
+
+	public static TheaterApp getInstance() {
+		if (myInstance == null) {
+			myInstance = new TheaterApp();
+			return myInstance;
+		} else {
+			return myInstance;
+		}
+	}
+
 	/** 
 	 * Searches a for a theater based on its id.
 	 * 
@@ -171,7 +180,7 @@ public class TheaterApp {
 	/**
 	 * Get a list of movies for a specific theater location.
 	 */
-	public String[] getMovies(String theaterId){
+	public ArrayList<String> getMovies(String theaterId){
 		ArrayList<String> retVal = new ArrayList<String>();
 		
 		Theater myTheater = searchTheater(theaterId);
@@ -183,50 +192,58 @@ public class TheaterApp {
 			}
 		}
 		
-		return (String[]) retVal.toArray();
+		return retVal;
 	}
 
 	/** 
 	 * Get a list of showings for a specific movie at a specific theater.
 	 */
-	public String[] getShowings(String theaterId, String movieId) {
-		ArrayList<String> retVal = new ArrayList<String>();
+	public ArrayList<Showing> getShowings(String theaterId, String movieId) {
+		// ArrayList<String> retVal = new ArrayList<String>();
 		
 		Theater myTheater = searchTheater(theaterId);
-		Movie myMovie = searchMovie(movieId);
-		
-		if (myTheater != null && myMovie != null) {
-			ArrayList<Showing> myShowings = myTheater.getShowings(myMovie);
-			if (myShowings != null) {
-				int numShowings = myShowings.size();
-				for (int i = 0; i < numShowings; i++)
-					retVal.add(myShowings.get(i).getShowingInfo());
+		if (myTheater != null) {
+			HashMap<Movie, ArrayList<Showing>> movieSched = myTheater.getMySchedule();
+			//Movie myMovie = searchMovie(movieId);
+			for (Movie m : movieSched.keySet()) {
+				if (m.getTitle().equals(movieId)) {
+					return movieSched.get(m);
+				}
 			}
 		}
-		
-		return (String[]) retVal.toArray();
+		return new ArrayList<>();
 	}
 	
 	/**
 	 * Get list of seats for a specific showing.
 	 */
-	public String[] getSeats(String theaterId, String movieId, String showingId) {
-		ArrayList<String> retVal = new ArrayList<String>();
+	public String[][] getSeats(String theaterId, String movieId, String showingId) {
+		ArrayList<String> retVal = new ArrayList<>();
 		
 		Theater myTheater = searchTheater(theaterId);
-		Movie myMovie = searchMovie(movieId);
+		Movie myMovie = null;
+		if (myTheater != null) {
+			HashMap<Movie, ArrayList<Showing>> movieSched = myTheater.getMySchedule();
+			//Movie myMovie = searchMovie(movieId);
+			for (Movie m : movieSched.keySet()) {
+				if (m.getTitle().equals(movieId)) {
+					myMovie = m;
+					break;
+				}
+			}
+		}
+		String[][] res = new String[5][5];
+		for (String [] row : res) {Arrays.fill(row, "A");} // # = available
 		if (myTheater != null && myMovie != null) {
 			Showing myShowing = myTheater.searchShowing(myMovie, showingId);
 			if (myShowing != null) {
 				ArrayList<Ticket> myTickets = myShowing.getMyTickets();
-				int numSeats = myTickets.size();
-				for (int i = 0; i < numSeats; i++) {
-					retVal.add(myTickets.get(i).getSeatInfo());
+				for (Ticket t : myTickets) {
+					res[t.getRow()-1][t.getCol()-1] = "S";
 				}
 			}
 		}
-		
-		return (String[]) retVal.toArray();
+		return res;
 	}
 	
 	/**
@@ -284,16 +301,18 @@ public class TheaterApp {
 	 * Registers the current user as a registered user.
 	 * Annual fee is charged.
 	 */
-	public String[] register(String username, String password, String name) {
+	public String[] register(String username, String password, String name,
+							 String phone, String email, String cardName, String cardNumber,
+							 int cvv, int month, int year) {
 		boolean retVal = false;
-
-		PaymentInfo myPaymentInfo = currentUser.getPaymentInfo();
-
-		if (myPaymentSystem.validPaymentInfo(myPaymentInfo)) {
-			RegisteredUser myRegisteredUser = myUserSystem.register(username, password, name, myPaymentInfo);
+		PaymentInfo newInfo = new PaymentInfo(email, name, Integer.parseInt(cardNumber), cvv, month, year);
+		if (myPaymentSystem.validPaymentInfo(newInfo)) {
+			RegisteredUser myRegisteredUser = myUserSystem.register(
+					username,  password,  name, phone,  email,
+					cardName,  cardNumber, cvv,  month, year, loader);
 			
 			if (myRegisteredUser != null) {
-				myPaymentSystem.charge(myPaymentInfo, ANNUAL_FEE);
+				myPaymentSystem.charge(myRegisteredUser.getPaymentInfo(), ANNUAL_FEE);
 				currentUser = myRegisteredUser;
 				retVal = true;
 			}				

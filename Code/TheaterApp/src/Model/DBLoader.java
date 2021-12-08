@@ -29,7 +29,7 @@ public class DBLoader {
 	 *  PROMISES: Returns the list of all theaters
 	 *  REQUIRES: Connection to information storage
 	 */
-	public ArrayList<Theater> loadTheaters(){
+	public ArrayList<Theater> loadTheaters(TheaterApp myObserver){
 		// Tested. Confirmed it works.
 		ArrayList<Theater> myTheaters = new ArrayList<>();
 		try {
@@ -42,7 +42,7 @@ public class DBLoader {
 					String tName = res.getString(1);
 					String pCode = res.getString(2);
 					int movielistid = res.getInt(3);
-					ArrayList<Movie> tMovies = loadMovies(new TheaterApp(), tName);
+					ArrayList<Movie> tMovies = loadMovies(myObserver, tName);
 					for (Movie movie : tMovies) {
 						ArrayList<Showing> movie_showings = loadShowings(movie);
 						theater_schedule.put(movie, movie_showings);
@@ -110,11 +110,11 @@ public class DBLoader {
 	 * @param m Movie
 	 * @return arraylist of showings
 	 */
-	private ArrayList<Showing> loadShowings(Movie m){
+	public ArrayList<Showing> loadShowings(Movie m){
 		// Tested. Works as expected.
 		ArrayList<Showing> myShowings = new ArrayList<>();
 		try {
-			String query = "SELECT datee, totalRows, totalCols, ticketListID from "+
+			String query = "SELECT S.id, datee, totalRows, totalCols, ticketListID from "+
 					"movie as M join showtimelist as SL on M.showtimeListID = SL.Id "+
 					"join showtime S on SL.showtimeID = S.id "+
 					"WHERE (M.showtimeListID=? AND M.movieName=?);";
@@ -125,12 +125,13 @@ public class DBLoader {
 			if (res != null) {
 				DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy.MM.dd hh:mm:ss");
 				while (res.next()) {
-					Timestamp datetime = res.getTimestamp(1);
-					int rows = res.getInt(2);
-					int cols = res.getInt(3);
-					int ticketListID = res.getInt(4);
+					String id = String.valueOf(res.getInt(1));
+					Timestamp datetime = res.getTimestamp(2);
+					int rows = res.getInt(3);
+					int cols = res.getInt(4);
+					int ticketListID = res.getInt(5);
 					ArrayList<Ticket> showtime_tickets = loadTickets(ticketListID);
-					myShowings.add(new Showing("void", showtime_tickets, datetime));
+					myShowings.add(new Showing(id, showtime_tickets, datetime));
 				}
 			}
 		} catch(Exception e) {System.out.println(e);}

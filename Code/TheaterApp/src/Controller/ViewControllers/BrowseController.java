@@ -2,7 +2,9 @@ package Controller.ViewControllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
+import Model.Showing;
 import View.BrowseMoviePage;
 import View.BrowseSeatPage;
 import View.BrowseShowtimePage;
@@ -47,30 +49,49 @@ public class BrowseController extends ViewController {
 	class SelectTheaterListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			String[] myListOfMovies = app.getMovies(theaterBrowse.selectionText.getText());
-			theaterBrowse.displayArea.setText(myListOfMovies[0]);
+			ArrayList<String> myListOfMovies = app.getMovies(theaterBrowse.selectionText.getText());
+			String res = "";
+			for (String s : myListOfMovies) {res += s + "\n";}
 			theaterBrowse.setVisible(false);
+			movieBrowse.displayArea.setText(res);
+			movieBrowse.setVisible(true);
+
 			System.out.println("Theater selected");
 		}
 	}
+	// This one shows showings for a movie selection
 	class SelectMovieListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			theaterBrowse.setVisible(false);
-			String[] myListOfMovies = app.getMovies(theaterBrowse.selectionText.getText());
-			movieBrowse.displayArea.setText(myListOfMovies[0]);
-			movieBrowse.setVisible(true);
+			ArrayList<Showing> myListOfShowings = app.getShowings(theaterBrowse.selectionText.getText(), movieBrowse.selectionText.getText());
+			String res = "";
+			for (Showing s : myListOfShowings) {res += s.getShowingInfo()+"\n";}
+			movieBrowse.setVisible(false);
+			showtimeBrowse.displayArea.setText(res);
+			showtimeBrowse.setVisible(true);
 			System.out.println("Movie selected");
 		}
 	}
+	// Shows seats for a showing selection
 	class SelectShowtimeListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			movieBrowse.setVisible(false);
-			String[] myListOfShowings = app.getShowings(theaterBrowse.selectionText.getText(), 
-													  movieBrowse.selectionText.getText());
-			showtimeBrowse.displayArea.setText(myListOfShowings[0]);
-			showtimeBrowse.setVisible(true);
+			String[][] res = app.getSeats(theaterBrowse.selectionText.getText(),
+													  movieBrowse.selectionText.getText(), showtimeBrowse.selectionText.getText());
+			String actualRES="";
+			for (int i = 0; i < 5; i++) {
+				actualRES += "row"+(i+1)+": ";
+				for (int j = 0; j < 5; j++) {
+					actualRES += res[i][j] + "  ";
+				}
+				actualRES += "\n";
+			}
+			actualRES += "   col: 1, 2, 3, 4, 5";
+			showtimeBrowse.setVisible(false);
+			seatBrowse.displayArea.setText(actualRES);
+			seatBrowse.setVisible(true);
 			System.out.println("Showtime selected");
 		}
 	}

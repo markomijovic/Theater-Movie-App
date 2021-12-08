@@ -8,8 +8,8 @@ import View.*;
 
 public class ViewController {
 	
-	protected TheaterApp app = new TheaterApp();
-	
+	protected TheaterApp app = TheaterApp.getInstance();
+
     public void showBrowsePage() {
     	BrowseTheaterPage theater = new BrowseTheaterPage();
     	BrowseMoviePage movie = new BrowseMoviePage();
@@ -46,7 +46,7 @@ public class ViewController {
     	RegisterPageController q= new RegisterPageController(p);
         p.display();
     }
-    
+
 
     class QuitListener implements ActionListener {
         @Override

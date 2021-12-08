@@ -25,11 +25,12 @@ public class Movie {
 	 * The theater app observs movie for any news to send to customers.
 	 */
 	private TheaterApp myObserver;
-	
+
+	private int showingListID;
+
 	/**
 	 * Constructor for movie.
 	 */
-	private int showingListID;
 	Movie(String title, String movieNews, TheaterApp myObserver, int sID) {
 		this.title = title;
 		setMovieNews(movieNews);
@@ -41,8 +42,7 @@ public class Movie {
 	 * Returns all relevant movie information for ordinary users
 	 */
 	public String getMovieInfo() {
-		return title + "\n" +
-			   movieNews;
+		return "Movie ID: "+title + " - Exclusive:" + movieNews;
 	}
 	
 	/**
@@ -50,6 +50,10 @@ public class Movie {
 	 */
 	public String getTitle() {
 		return title;
+	}
+
+	public int getShowingListID() {
+		return showingListID;
 	}
 
 	/**

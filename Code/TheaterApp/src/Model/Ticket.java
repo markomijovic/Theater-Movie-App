@@ -79,7 +79,15 @@ public class Ticket {
 	public void returnTicket() {
 		sold = false;
 	}
-	
+
+	public int getRow() {
+		return seat.getRow();
+	}
+
+	public int getCol() {
+		return seat.getCol();
+	}
+
 	/**
 	 * Gets the seat information.
 	 */

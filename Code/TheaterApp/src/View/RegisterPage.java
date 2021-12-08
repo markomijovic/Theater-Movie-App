@@ -15,8 +15,8 @@ public class RegisterPage extends Page {
 	public  JTextField passwordText;
 	private  JLabel nameLabel;
 	public  JTextField nameText;
-	private  JLabel addressLabel;
-	public  JTextField addressText;
+	private  JLabel phoneLabel;
+	public  JTextField phoneText;
 	private  JLabel emailLabel;
 	public  JTextField emailText;
 	private  JLabel nameOnCardLabel;
@@ -73,14 +73,13 @@ public class RegisterPage extends Page {
     	nameText.setBounds(100,110,165,25);
     	this.add(nameText);
     	
-    	addressLabel = new JLabel("Address");
-    	addressLabel.setBounds(10,140,80,25);
-    	this.add(addressLabel);
-    	
-    	
-    	nameText = new JTextField(20);
-    	nameText.setBounds(100,140,165,25);
-    	this.add(nameText);
+    	phoneLabel = new JLabel("Phone");
+    	phoneLabel.setBounds(10,140,80,25);
+    	this.add(phoneLabel);
+
+		phoneText = new JTextField(20);
+		phoneText.setBounds(100,140,165,25);
+		this.add(phoneText);
     	
     	emailLabel = new JLabel("Email");
     	emailLabel.setBounds(10,170,80,25);

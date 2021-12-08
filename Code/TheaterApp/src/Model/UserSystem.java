@@ -20,17 +20,17 @@ public class UserSystem {
 	 * When the system is created, user information is loaded from the 
 	 * database via DBLoader static class.
 	 */
-	private UserSystem() {
-		myUsers = DBLoader.loadUsers();
+	private UserSystem(DBLoader loader) {
+		myUsers = loader.loadUsers();
 	}
 	
 	/**
 	 * Returns the only instance of UserSystem. If there is no instance,
 	 * one is created.
 	 */
-	public static UserSystem getInstance() {
+	public static UserSystem getInstance(DBLoader loader) {
 		if (myInstance == null)
-			return new UserSystem();
+			return new UserSystem(loader);
 		else
 			return myInstance;
 	}
@@ -77,14 +77,16 @@ public class UserSystem {
 	 * PROMISES: To create a registered user and add it to the database.
 	 * REQUIRES: All data members for registered user.
 	 */
-	public RegisteredUser register(String username, String password, String name, PaymentInfo myPaymentInfo) {
+	public RegisteredUser register(String username, String password, String name,
+								   String phone, String email, String cardName, String cardNumber,
+								   int cvv, int month, int year, DBLoader loader) {
+		System.out.println("here");
 		RegisteredUser retVal = null;
-		
+		PaymentInfo newInfo = new PaymentInfo(email, name, Integer.parseInt(cardNumber), cvv, month, year);
 		if (searchUser(username) == null) {
-			retVal = new RegisteredUser(username, password, name, myPaymentInfo);
-			myUsers.add(retVal);
+			retVal = new RegisteredUser(username, password, name, newInfo);
+			loader.addRegisteredUser(username, password, name, phone, email, cardName, cardNumber, cvv, month, year);
 		}
-		
 		return retVal;
 	}
 	

@@ -28,7 +28,7 @@ public class HomepageController extends ViewController {
         public void actionPerformed(ActionEvent e) {
             //AppSeting.option="booking";
             theView.setVisible(false);
-            showBuyPage();
+            //showBuyPage();
         }
     }
 

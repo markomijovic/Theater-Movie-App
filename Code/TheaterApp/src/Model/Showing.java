@@ -76,7 +76,7 @@ public class Showing {
 	 * Returns room number and time.
 	 */
 	public String getShowingInfo() {
-		return id + "\nTime: " + showtime.toString();
+		return "ID:" + id + " at Time: " + showtime.toString();
 	}
 	
 }
